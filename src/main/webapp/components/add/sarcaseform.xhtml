@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"    
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:accordionPanel  widgetVar="basic">
+            <p:tab  title="Case Details">
+                <ui:include src="/components/add/sarcasedetails.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>
+            </p:tab>
+            <p:tab title="SARS Ref Details">                                                   
+                <ui:include src="/components/add/sarcasereferencedetails.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>
+            </p:tab>          
+            <p:tab  title="Reported Person Details" rendered="#{sharedFormBean.entity.sarCase.clientType eq 'TRAVELLER_INDIVIDUAL'}">
+                <ui:include src="/components/add/reportedpersondetails.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>                                               
+            </p:tab>
+            <p:tab  title="Entity Type Details" rendered="#{sharedFormBean.entity.sarCase.clientType eq 'COMPANY_TRADER_IMPORTER_EXPORTER'}">
+                <ui:include src="/components/add/entitytypedetails.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include> 
+            </p:tab>
+            <p:tab title="Non Compliance Details">
+                <ui:include src="/components/add/noncompliancedetails.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include> 
+            </p:tab>
+            <p:tab title="Reporting Person Details">
+                <ui:include src="/components/add/reportingpersondetails.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include> 
+            </p:tab>
+            <p:tab title="Attachements">
+                <ui:include src="/components/add/attachment.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>
+            </p:tab>
+        </p:accordionPanel>
+    </ui:component>
+</html>

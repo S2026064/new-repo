@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Were goods seizure and Detained?"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.seizureAndDetained}"/>
+                </b:formGroup>
+            </b:panelGrid>
+            <b:panelGrid rendered="#{sharedBean.entity.auditPlan.auditReport.seizureAndDetained eq 'YES'}" colSpans="4,8" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="  Did the client request goods back ?"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.clientRequestGoodsBack}"/>
+                </b:formGroup>
+            </b:panelGrid>
+            <b:panelGrid rendered="#{sharedBean.entity.auditPlan.auditReport.clientRequestGoodsBack eq 'YES'}" colSpans="4,8" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Rand Value per Section 93 TOTAL (R)"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText required="true" value="#{sharedBean.entity.auditPlan.auditReport.totalRandValuePerSection93}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+            </b:panelGrid>
+            <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Was there Lien on the goods?"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.wasLienOnGood}"/>
+                </b:formGroup>
+            </b:panelGrid>                     
+        </p:panel>
+    </ui:component>
+</html>

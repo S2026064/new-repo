@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{createSarCaseBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="SAR Cases" styleClass="panel-title-css"/>
+                            <p:separator/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable selection="#{createSarCaseBean.selectedSarCase}" rowKey="#{sar.id}" value="#{createSarCaseBean.sarCases}" var="sar" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <f:facet name="header">
+                            <b:row>
+                                <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                    <b:commandButton large-screen="full-width" iconSize="lg" iconAwesome="fa-plus" look="primary" value="Add" disabled="#{not createSarCaseBean.activeUser.userRole.permission.add}" action="#{createSarCaseBean.addOrUpdate(null)}" update="@form"/>
+                                    <b:commandButton large-screen="full-width" iconSize="lg" iconAwesome="fa-send" look="primary" value="Rework" disabled="#{not createSarCaseBean.activeUser.userRole.permission.add}" action="#{createSarCaseBean.submit()}" update="@form"/>
+                                    <b:commandButton large-screen="full-width" iconSize="lg" iconAwesome="fa-send" look="primary" value="Submit" disabled="#{not createSarCaseBean.activeUser.userRole.permission.add}" action="#{createSarCaseBean.submit()}" update="@form"/>
+                                </b:panelGrid>
+                            </b:row>
+                        </f:facet>
+                        <p:column selectionMode="single" style="width: 35px;"/>
+                        <p:column  headerText="Date">
+                            <h:outputText value="#{sar.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{sar.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Refference">
+                            <h:outputText value="#{sar.reference}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{sar.status.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton disabled="#{not createSarCaseBean.activeUser.userRole.permission.update}" rendered="#{sar.status eq 'NEW'}" look="primary" size="xs" value="Edit" icon-size="xs" iconBrand="5.2.0" iconAwesome="fa-pencil"  action="#{createSarCaseBean.addOrUpdate(sar)}" process="@form" update="@form"/>
+                            <p:spacer width="5px"/>
+                            <b:commandButton disabled="#{not createSarCaseBean.activeUser.userRole.permission.delete}" rendered="#{sar.status eq 'NEW'}" look="danger" size="xs" value="Del" icon-size="xs" iconBrand="5.2.0" iconAwesome="fa-trash" action="#{createSarCaseBean.delete(sar)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>                    
+                </b:panel>
+                <b:panel collapsible="false" rendered="#{createSarCaseBean.add}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="Add/Update SAR Case" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <p:accordionPanel id="accordionPanel_2024"  widgetVar="basic">
+                        <p:tab title="Case Details">
+                            <ui:include src="/components/sarcasedetails.xhtml">
+                                <f:ajax render=":sarcase_details_2024"/>
+                            </ui:include>
+                        </p:tab>
+                        <p:tab title="SARS Ref Details">                                                   
+                            <ui:include src="/components/sarcasereferencedetails.xhtml">
+                                <f:ajax render=":sarcase_ref_details_2024"/>
+                            </ui:include>
+                        </p:tab>          
+                        <p:tab  title="Reported Person Details" rendered="#{createSarCaseBean.entity.clientType eq 'TRAVELLER_INDIVIDUAL'}">
+                            <ui:include src="/components/reportedpersondetails.xhtml">
+                                <f:ajax render=":reported_person_details_2024"/>
+                            </ui:include>                                               
+                        </p:tab>
+                        <p:tab  title="Entity Type Details" rendered="#{createSarCaseBean.entity.clientType eq 'COMPANY_TRADER_IMPORTER_EXPORTER'}">
+                            <ui:include src="/components/entitytypedetails.xhtml">
+                                <f:ajax render=":entity_type_details_2024"/>
+                            </ui:include> 
+                        </p:tab>
+                        <p:tab title="Non Compliance Details">
+                            <ui:include src="/components/noncompliancedetails.xhtml">
+                                <f:ajax render=":non_compliance_details_2024"/>
+                            </ui:include> 
+                        </p:tab>
+                        <p:tab title="Reporting Person Details">
+                            <ui:include src="/components/reportingpersondetails.xhtml">
+                                <f:ajax render=":reporting_person_details_2024"/>
+                            </ui:include> 
+                        </p:tab>
+                        <p:tab title="Attachements">
+                            <ui:include src="/components/attachment.xhtml">
+                                <f:ajax render=":attchment_details_2024"/>
+                            </ui:include>
+                        </p:tab>
+                    </p:accordionPanel>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="success" action="#{createSarCaseBean.save(createSarCaseBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{createSarCaseBean.cancel(createSarCaseBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

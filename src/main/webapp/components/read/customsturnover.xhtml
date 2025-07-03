@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.customsturnovers}" var="customsTurnOver" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="20">
+                <p:column headerText="Ref Nbr">
+                    <h:outputText value="#{customsTurnOver.refNumber}"/>
+                </p:column>
+                <p:column headerText="Cal Year">
+                    <h:outputText value="#{customsTurnOver.calYear}"/>
+                </p:column>
+                <p:column headerText="Import Value">
+                    <h:outputText value="#{customsTurnOver.importValue}"/>
+                </p:column>
+                <p:column headerText="Export Value">
+                    <h:outputText value="#{customsTurnOver.exportValue}"/>
+                </p:column>
+                <p:column headerText="Import Duty">
+                    <h:outputText value="#{customsTurnOver.importDuty}"/>
+                </p:column>
+                <p:column headerText="Import VAT">
+                    <h:outputText value="#{customsTurnOver.importVat}"/>
+                </p:column>
+                <p:column headerText="Import Lines">
+                    <h:outputText value="#{customsTurnOver.importLine}"/>
+                </p:column>
+                <p:column headerText="Export Lines">
+                    <h:outputText value="#{customsTurnOver.exportLine}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

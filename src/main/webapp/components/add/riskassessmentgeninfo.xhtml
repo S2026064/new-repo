@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >          
+            <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Risk Area"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Risk Identified?"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Number of risk(s) Identified?"/>
+                    </b:formGroup>
+                </b:panelGrid>
+                <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Contravention History"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.contraventionHistoryOption}" required="true" converter="entityConverter" requiredMessage="Select Contravention History">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}" process="@this"  update="contraTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <p:outputPanel id="contraTab">
+                        <b:formGroup>
+                            <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.contraventionHistory}" disabled="#{sharedBean.entity.sarCase.riskAssessment.contraventionHistoryOption eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                    </p:outputPanel>
+                    <b:formGroup>
+                        <p:outputLabel value="Country Of Origin"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.originCountryOption}" required="true" converter="entityConverter" requiredMessage="Select Country Of Origin">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}" process="@this"  update="countryTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="countryTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.originCountry}" disabled="#{sharedBean.entity.sarCase.riskAssessment.originCountryOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Duty Exemption Regimes"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.dutyExemptionOption}" required="true" converter="entityConverter" requiredMessage="Select Duty Exemption Regimes">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="dutyExempTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="dutyExempTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.dutyExemption}" disabled="#{sharedBean.entity.sarCase.riskAssessment.dutyExemptionOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Duty Suspension"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.dutySuspensionOption}" required="true" converter="entityConverter" requiredMessage="Select Duty Suspension">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}" update="dutySuspTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="dutySuspTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.dutySuspension}" disabled="#{sharedBean.entity.sarCase.riskAssessment.dutySuspensionOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Licensing and Registration"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.licensingAndRegistrationOption}" required="true" converter="entityConverter" requiredMessage="Select Licensing and Registration">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="licenceRegTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="licenceRegTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.licensingAndRegistration}" disabled="#{sharedBean.entity.sarCase.riskAssessment.licensingAndRegistrationOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Mode of Transport"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.modeOfTransportOption}" required="true" converter="entityConverter" requiredMessage="Select Mode of Transport">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="modeOfTransTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="modeOfTransTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.modeOfTransport}" disabled="#{sharedBean.entity.sarCase.riskAssessment.modeOfTransportOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Other P and R (excluding drugs and precursors)"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.otherPAndROption}" required="true" converter="entityConverter" requiredMessage="Select Other P and R (excluding drugs and precursors)">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="otherPandRTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="otherPandRTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.otherPAndR}" disabled="#{sharedBean.entity.sarCase.riskAssessment.otherPAndROption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Revenue Protection"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.revenueProtectionOption}" required="true" converter="entityConverter" requiredMessage="Select Revenue Protection">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="revProtectionTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="revProtectionTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.revenueProtection}" disabled="#{sharedBean.entity.sarCase.riskAssessment.revenueProtectionOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Rules of Origin"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.rulesOfOriginOption}" required="true" converter="entityConverter" requiredMessage="Select Rules of Origin">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="rulesOfOriginTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="rulesOfOriginTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.rulesOfOrigin}" disabled="#{sharedBean.entity.sarCase.riskAssessment.rulesOfOriginOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Security"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.securityOption}" required="true" converter="entityConverter" requiredMessage="Select Security">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="securityTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="securityTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.security}" disabled="#{sharedBean.entity.sarCase.riskAssessment.securityOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Tariff"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.tarrifOption}" required="true" converter="entityConverter" requiredMessage="Select Tariff">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="tarrifTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="tarrifTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.tarrif}" disabled="#{sharedBean.entity.sarCase.riskAssessment.tarrifOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Trade Restrictions"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.tradeRestrictionsOption}" required="true" converter="entityConverter" requiredMessage="Select Trade Restrictions">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"   update="tradeTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="tradeTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.tradeRestrictions}" disabled="#{sharedBean.entity.sarCase.riskAssessment.tradeRestrictionsOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Valuation"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.valuationOption}" required="true" converter="entityConverter" requiredMessage="Select valuation">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"  update="valuationTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="valuationTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.valuation}" disabled="#{sharedBean.entity.sarCase.riskAssessment.valuationOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Warehousing"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.warehousingOption}" required="true" converter="entityConverter" requiredMessage="Select warehousing">
+                            <p:ajax event="change" listener="#{sharedBean.onRiskSelectionListener}"  update="wareHousingTab"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <b:formGroup id="wareHousingTab">
+                        <b:inputText  maxlength="3" required="true" requiredMessage="Enter a number" value="#{sharedBean.entity.sarCase.riskAssessment.warehousing}" disabled="#{sharedBean.entity.sarCase.riskAssessment.warehousingOption eq 'NO'}" field-size="lg"/>
+                    </b:formGroup>
+                </b:panelGrid>
+                <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="In addition to Customs and Excise compliance risks, was any risk for any other tax types also identified in this Risk Assessment that would indicate that an integrated audit is required?"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.otherRisk}" required="true" converter="entityConverter" requiredMessage="Select Contravention History">
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+
+                    <b:formGroup>
+                        <p:outputLabel value="Main Industry type that applies to the trader"/>
+                    </b:formGroup> 
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.riskAssessment.mainIndustry}" required="true" converter="entityConverter" requiredMessage="Select In addition to Customs and Excise compliance risks, was any risk for any other tax types also identified in this Risk Assessment that would indicate that an integrated audit is required?">
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.mainIndustries}" var="mainIndustry" itemLabel="#{mainIndustry.toString()}" itemValue="#{mainIndustry}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                </b:panelGrid>
+                <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Risk Assessment Periods"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:datePicker pattern="dd MMM yyyy" selectionMode="range" required="true" requiredMessage="Select risk assessment period"  value="#{sharedBean.entity.sarCase.riskAssessment.riskPeriod}"/>
+                    </b:formGroup>
+                </b:panelGrid>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:selectBooleanCheckbox  itemLabel="Exporter" value="#{sharedBean.entity.vddLed.customsExciseClientType.exporter}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Importer" value="#{sharedBean.entity.vddLed.customsExciseClientType.importer}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Manufacturer" value="#{sharedBean.entity.vddLed.customsExciseClientType.manufacturer}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Licensee" value="#{sharedBean.entity.vddLed.customsExciseClientType.licensee}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Registrant" value="#{sharedBean.entity.vddLed.customsExciseClientType.registrant}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Warehouse" value="#{sharedBean.entity.vddLed.customsExciseClientType.warehouse}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Depot" value="#{sharedBean.entity.vddLed.customsExciseClientType.depot}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Terminal" value="#{sharedBean.entity.vddLed.customsExciseClientType.terminal}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Agent" value="#{sharedBean.entity.vddLed.customsExciseClientType.agent}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Remover" value="#{sharedBean.entity.vddLed.customsExciseClientType.remover}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Other" value="#{sharedBean.entity.vddLed.customsExciseClientType.other}"/>                      
+                </b:formGroup>
+            </b:panelGrid>
+            <h:panelGroup>
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid" rendered="#{sharedBean.entity.vddLed.customsExciseClientType.other}">
+                    <b:formGroup>
+                        <p:fieldset legend="Description">
+                            <b:inputText readonly="true" value="#{sharedBean.entity.vddLed.customsExciseClientType.otherDescription}" field-size="lg"/>
+                        </p:fieldset>
+                    </b:formGroup>
+                </b:panelGrid>
+            </h:panelGroup>
+        </p:panel>
+    </ui:component>
+</html>

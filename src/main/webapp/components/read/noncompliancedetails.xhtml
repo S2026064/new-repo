@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable  id="nonComplianceDetailsTab_ID_2024" value="#{sharedBean.entity.sarCase.nonComplianceDetails}" var="noncomp" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">                
+                <p:column headerText="incident Date">
+                    <h:outputText value="#{noncomp.incidentDate}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column  headerText="Time Frame">
+                    <h:outputText value="#{noncomp.timeFrame.toString()}"/>                     
+                </p:column>
+                <p:column  headerText="Yearly Loss">
+                    <h:outputText value="#{noncomp.yearlyLoss.toString()}"/>
+                </p:column>
+                <p:column headerText="Payment">
+                    <h:outputText value="#{noncomp.payment.toString()}"/>
+                </p:column>
+                <p:column headerText="Illegal Activities">
+                    <h:outputText value="#{noncomp.illegalActivities.toString()}"/>
+                </p:column>
+                <p:column headerText="Declaration">
+                    <h:outputText value="#{noncomp.declaration.toString()}"/>
+                </p:column>
+                <p:column headerText="Submission">
+                    <h:outputText value="#{noncomp.submission.toString()}"/>
+                </p:column>
+                <p:column headerText="Licensing and Registration">
+                    <h:outputText value="#{noncomp.licensingRegistration.toString()}"/>
+                </p:column>
+                <p:column headerText="Action" styleClass="medium">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  value="View" action="#{sharedBean.addOrUpdateNonComplianceDetails(noncomp,'noncompliancedetailspopupview')}" process="@this"/>
+                </p:column>
+            </p:dataTable>  
+        </p:panel>
+    </ui:component>
+</html>

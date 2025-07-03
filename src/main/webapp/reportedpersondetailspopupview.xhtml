@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <o:massAttribute name="disabled" value="true">
+                    <p:panel closable="false" collapsed="false">
+                        <p:fieldset  legend="Personal Details">
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="First Name"/>
+                                    <p:inputText  placeholder="Enter First Name" value="#{reportedPersonDetailsBean.entity.firstName}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Last Name"/>
+                                    <p:inputText  placeholder="Enter First Name" value="#{reportedPersonDetailsBean.entity.lastName}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Birth Date"/>
+                                    <p:calendar placeholder="Select birth date" value="#{reportedPersonDetailsBean.entity.birthDate}" pattern="dd MMM yyyy"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="ID Number"/>
+                                    <p:inputText  maxlength="13" placeholder="Enter ID Number" value="#{reportedPersonDetailsBean.entity.identityNumber}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                        <p:separator/>
+                        <p:fieldset  legend="Residential Address">
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:inputText placeholder="Line1" value="#{reportedPersonDetailsBean.entity.residentialAddress.line1}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.line2}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.line3}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.line4}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.line5}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.area}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.code}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:inputText placeholder="" value="#{reportedPersonDetailsBean.entity.residentialAddress.province}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                    </p:panel>
+                </o:massAttribute>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{suspCaseAllocationBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Suspicious Activity Report Cases" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable globalFilterOnly="true" widgetVar="crcsAllocationTable" rowIndexVar="rowIndex" value="#{suspCaseAllocationBean.suspiciousCases}" var="susp" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="15">
+                        <f:facet name="header">                          
+                            <p:toolbar>
+                                <p:toolbarGroup align="right">
+                                    <p:inputText placeholder="Filter by all fields" id="globalFilter" style="width:30rem" onkeyup="PF('crcsAllocationTable').filter()"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                        </f:facet>
+                        <p:column headerText="No." styleClass="small">
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column  headerText="Creation Date" filterBy="#{susp.createdDate}">
+                            <h:outputText value="#{susp.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column  headerText="Allocation Date" filterBy="#{susp.updatedDate}">
+                            <h:outputText value="#{susp.updatedDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code" filterBy="#{susp.ibrData.customsCode}">
+                            <h:outputText value="#{susp.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Case Ref Number" filterBy="#{susp.caseRefNumber}">
+                            <h:outputText value="#{susp.caseRefNumber}"/>
+                        </p:column>
+                        <p:column headerText="Type" filterBy="#{susp.caseType.toString()}">
+                            <h:outputText value="#{susp.caseType.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Status" filterBy="#{susp.status.toString()}">
+                            <h:outputText value="#{susp.status.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton rendered="#{susp.status eq 'REVIEWED_PENDING_ALLOCATION'}" icon="" value="Allocate" disabled="#{not suspCaseAllocationBean.activeUser.userRole.permission.update}"  look="primary" action="#{suspCaseAllocationBean.allocate(susp)}" process="@form" update="@form"/>
+                            <b:commandButton rendered="#{susp.status ne 'REVIEWED_PENDING_ALLOCATION'}" value="Re-Assign" disabled="#{not suspCaseAllocationBean.activeUser.userRole.permission.update}"  look="primary" action="#{suspCaseAllocationBean.reAssign(susp)}" process="@form" update="@form"/>
+                        </p:column>
+                    </p:dataTable>                    
+                </b:panel>
+                <p:panel rendered="#{suspCaseAllocationBean.add}" closable="false" collapsed="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="Reverse / Re-Assign SAR Case" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <p:fieldset legend="SAR Case Reference Details">
+                        <o:massAttribute name="readonly" value="true">
+                            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Case Status"/>
+                                    <p:inputText placeholder="" value="#{suspCaseAllocationBean.entity.status.toString()}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Case Number"/>
+                                    <p:inputText value="#{suspCaseAllocationBean.entity.caseRefNumber}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Customs/Excise Code"/>
+                                    <p:inputText placeholder="" value="#{suspCaseAllocationBean.entity.sarCase.customExciseCode}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Company/Registered Number"/>
+                                    <p:inputText placeholder="" value="#{suspCaseAllocationBean.entity.sarCase.companyNumber}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Income Tax Number"/>
+                                    <p:inputText placeholder="" value="#{suspCaseAllocationBean.entity.sarCase.incomeTax}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="VAT Number"/>
+                                    <p:inputText placeholder="" value="#{suspCaseAllocationBean.entity.sarCase.vat}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </o:massAttribute>
+                    </p:fieldset>
+                    <p:spacer height="5px"/>
+                    <p:fieldset legend="Allocate User to SAR Case">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup rendered="#{sar.status ne 'ACTIVE_SAR'}">
+                                <p:selectOneMenu value="#{suspCaseAllocationBean.allocatedUser}" required="true" requiredMessage="Select the person user to which the SAR Case should be assigned."  converter="entityConverter">
+                                    <f:selectItem  itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{suspCaseAllocationBean.specialists}" var="specialist" itemLabel="[#{specialist.fullNames}] - [#{specialist.sid}] - [#{specialist.userRole.description}]" itemValue="#{specialist}"/>
+                                </p:selectOneMenu>
+                            </b:formGroup>
+                            <b:formGroup rendered="#{sar.status eq 'ACTIVE_SAR'}">
+                                <p:selectOneMenu value="#{suspCaseAllocationBean.allocatedUser}" required="true" requiredMessage="Select the person user to which the SAR Case should be assigned."  converter="entityConverter">
+                                    <f:selectItem  itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{suspCaseAllocationBean.reviewers}" var="reviewer" itemLabel="[#{reviewer.fullNames}] - [#{reviewer.sid}] - [#{reviewer.userRole.description}]" itemValue="#{reviewer}"/>
+                                </p:selectOneMenu>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Agree" icon="check" look="success" action="#{suspCaseAllocationBean.save(suspCaseAllocationBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{suspCaseAllocationBean.cancel(suspCaseAllocationBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Cancellations" value="#{sharedBean.entity.vddLed.vddlType.cancellations}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Default on deferment" value="#{sharedBean.entity.vddLed.vddlType.defaultOnDefement}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Rules of Origin" value="#{sharedBean.entity.vddLed.vddlType.ruleOfOrigin}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Refunds" value="#{sharedBean.entity.vddLed.vddlType.refunds}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Application for substitution " value="#{sharedBean.entity.vddLed.vddlType.appSubstitutionOvertimeGoods}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Other applications from sureties" value="#{sharedBean.entity.vddLed.vddlType.otherAppSureties}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Stockist account (DA 490)" value="#{sharedBean.entity.vddLed.vddlType.stocklistAccountDa490}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Application to bring duty to account" value="#{sharedBean.entity.vddLed.vddlType.appDutyAccount}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="VDN/TDN applications" value="#{sharedBean.entity.vddLed.vddlType.vdnTdnApp}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="APDP Account" value="#{sharedBean.entity.vddLed.vddlType.apdpAccount}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Liquidations" value="#{sharedBean.entity.vddLed.vddlType.liquidations}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Warehouse Approvals" value="#{sharedBean.entity.vddLed.vddlType.warehouseApprovals}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Rebate Approvals" value="#{sharedBean.entity.vddLed.vddlType.rebateApprovals}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Approved Exporter Verifications" value="#{sharedBean.entity.vddLed.vddlType.approvedExporterVerifications}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="MAA Verifications and Requests" value="#{sharedBean.entity.vddLed.vddlType.maaVerificationsRequest}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="TIU Case Hand Over" value="#{sharedBean.entity.vddLed.vddlType.tiuCaseHandOver}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Branch Ops Case Hand Over" value="#{sharedBean.entity.vddLed.vddlType.branchOpHandOver}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Head Office Case Referral" value="#{sharedBean.entity.vddLed.vddlType.headOfficeCaseReferral}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="SARS Service Manager Case Referral" value="#{sharedBean.entity.vddLed.vddlType.sarsServiceManagerCaseReferral}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Acquittals" value="#{sharedBean.entity.vddLed.vddlType.acquittals}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectBooleanCheckbox itemLabel="Other" value="#{sharedBean.entity.vddLed.vddlType.other}">
+                        <p:ajax event="change" update="vddlTypeLabel" />
+                    </p:selectBooleanCheckbox>
+                </b:formGroup>
+            </b:panelGrid>
+            <h:panelGroup id="vddlTypeLabel">
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid" rendered="#{sharedBean.entity.vddLed.vddlType.other}">
+                    <b:formGroup>
+                        <p:fieldset legend="Description">
+                            <b:inputText value="#{sharedBean.entity.vddLed.vddlType.otherDescription}" field-size="lg"/>
+                        </p:fieldset>
+                    </b:formGroup>
+                </b:panelGrid>
+            </h:panelGroup>
+        </p:panel>
+    </ui:component>
+</html>

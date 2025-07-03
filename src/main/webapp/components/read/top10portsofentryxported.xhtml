@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.top10portsofentryxporteds}" var="portOfEntry" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="20">
+                <p:column headerText="Purpose Code">
+                    <h:outputText value="#{portOfEntry.purposeCode}" rendered="#{portOfEntry.customsValueType eq 'PORT_OF_ENTRY'}"/>
+                </p:column>
+                <p:column headerText="Lines">
+                    <h:outputText value="#{portOfEntry.lines}" rendered="#{portOfEntry.customsValueType eq 'PORT_OF_ENTRY'}"/>
+                </p:column>
+                <p:column headerText="Customs value">
+                    <h:outputText value="#{portOfEntry.customsValue}" rendered="#{portOfEntry.customsValueType eq 'PORT_OF_ENTRY'}"/>
+                </p:column>
+                <p:column headerText="Duty">
+                    <h:outputText value="#{portOfEntry.duty}" rendered="#{portOfEntry.customsValueType eq 'PORT_OF_ENTRY'}"/>
+                </p:column>
+                <p:column headerText="VAT Due">
+                    <h:outputText value="#{portOfEntry.vatDue}" rendered="#{portOfEntry.customsValueType eq 'PORT_OF_ENTRY'}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

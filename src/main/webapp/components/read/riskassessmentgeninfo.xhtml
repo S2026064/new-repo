@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:fieldset legend="Risk Assessment Information">
+                <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                    <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Risk Area"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Risk Identified?"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Number of risk(s) Identified?"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Contravention History"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.contraventionHistoryOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.contraventionHistory}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Country Of Origin"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.originCountryOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.originCountry}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Duty Exemption Regimes"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.dutyExemptionOption}"/>
+                        </b:formGroup>
+                        <b:formGroup id="dutyExempTab">
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.dutyExemption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Duty Suspension"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.dutySuspensionOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.dutySuspension}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Licensing and Registration"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.licensingAndRegistrationOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.licensingAndRegistration}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Mode of Transport"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.modeOfTransportOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.modeOfTransport}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Other P and R (excluding drugs and precursors)"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.otherPAndROption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.otherPAndR}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Revenue Protection"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.revenueProtectionOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.revenueProtection}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Rules of Origin"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.rulesOfOriginOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.rulesOfOrigin}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Security"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.securityOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.security}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Tariff"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.tarrifOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.tarrif}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Trade Restrictions"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.tradeRestrictionsOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.tradeRestrictions}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Valuation"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.valuationOption}"/>
+                        </b:formGroup>
+                        <b:formGroup >
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.valuation}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Warehousing"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.warehousingOption}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.warehousing}"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="In addition to Customs and Excise compliance risks, was any risk for any other tax types also identified in this Risk Assessment that would indicate that an integrated audit is required?"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.otherRisk}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Main Industry type that applies to the trader"/>
+                        </b:formGroup> 
+                        <b:formGroup>
+                            <p:inputText value="#{sharedBean.entity.sarCase.riskAssessment.mainIndustry}"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Risk Assessment Periods"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:datePicker pattern="dd MMM yyyy" selectionMode="range"  value="#{sharedBean.entity.sarCase.riskAssessment.riskPeriod}" readonly="true" />
+                        </b:formGroup>
+                    </b:panelGrid>
+                </b:panelGrid>
+            </p:fieldset>
+        </p:panel>
+    </ui:component>
+</html>

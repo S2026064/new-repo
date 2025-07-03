@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel collapsed="false" closable="false">
+            <p:fieldset  legend="Allocate SAR Case to Office">
+                <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:selectOneMenu value="#{sharedBean.entity.ciLocationOffice}" converter="entityConverter" required="true" requiredMessage="Select the office to which the case is assigned">
+                            <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.locationOffices}" var="locationOffice" itemLabel="#{locationOffice.area}" itemValue="#{locationOffice}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                </b:panelGrid>
+            </p:fieldset>
+        </p:panel>
+    </ui:component>
+</html>

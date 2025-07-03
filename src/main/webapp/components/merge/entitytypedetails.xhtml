@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <ui:repeat value="#{sharedEntity.sarCase.entityTypeDetails}" var="etd">
+                <p:panel closable="false" collapsed="false">
+                    <p:fieldset  legend="Personal Details">
+                        <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Registration Name"/>
+                                <p:inputText placeholder="Enter registration name" value="#{etd.registeredName}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Trading Name"/>
+                                <p:inputText  placeholder="Enter trading name" value="#{etd.tradingName}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Company Number"/>
+                                <p:inputText placeholder="Enter company number" value="#{etd.companyNumber}"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <p:spacer height="5px"/>
+                    <p:fieldset  legend="Business Address">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Complex Number"/>
+                                <p:inputText  value="#{etd.businessAddress.line1}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Complex Name"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.line2}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Street Number"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.line3}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Street Name"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.line4}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="City/Town"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.area}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Postal Code"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.code}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Country Name"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.countryName}"/>
+                            </b:formGroup>
+                            <b:formGroup  rendered="#{etd.businessAddress.countryName eq 'South Africa'}">
+                                <p:outputLabel value="Province"/>
+                                <p:inputText placeholder="" value="#{etd.businessAddress.province.toString()}"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                </p:panel>
+                <p:spacer height="5px"/>
+            </ui:repeat>                                        
+        </p:panel>
+    </ui:component>
+</html>

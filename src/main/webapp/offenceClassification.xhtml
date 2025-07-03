@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel rendered="#{offenceClassificationBean.list}" look="default"  collapsible="false">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Offence Classifications" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable globalFilterOnly="true" widgetVar="offenceClassificationTable" value="#{offenceClassificationBean.offenceClassifications}" var="offonceClassif" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="15">
+                        <f:facet name="header">                          
+                            <p:toolbar>
+                                <p:toolbarGroup>
+                                    <b:commandButton style="width:30rem" large-screen="full-width" iconSize="md" size="lg" icon="plus" look="primary" value="New" disabled="#{not offenceClassificationBean.activeUser.userRole.permission.add}" action="#{offenceClassificationBean.addOrUpdate(null)}" update="@form"/>
+                                </p:toolbarGroup>
+                                <p:toolbarGroup align="right">
+                                    <p:inputText placeholder="Filter by all fields" id="globalFilter" style="width:30rem" onkeyup="PF('offenceClassificationTable').filter()"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                        </f:facet>
+                        <p:column headerText="No." styleClass="small">
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="Date" filterBy="#{offonceClassif.createdDate}">
+                            <h:outputText value="#{offonceClassif.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Description" filterBy="#{offonceClassif.description}">
+                            <h:outputText value="#{offonceClassif.description}"/>
+                        </p:column>
+                        <p:column headerText="Type" styleClass="xxlarge" filterBy="#{offonceClassif.classificationType.toString()}">
+                            <h:outputText value="#{offonceClassif.classificationType.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="xlarge">
+                            <p:commandButton styleClass="ui-button-primary btn-size-sm" disabled="#{not offenceClassificationBean.activeUser.userRole.permission.update}" value="Edit" action="#{offenceClassificationBean.addOrUpdate(offonceClassif)}" update="@form"/>
+                            <p:spacer width="5px"/>
+                            <p:commandButton styleClass="ui-button-danger btn-size-sm" disabled="#{not offenceClassificationBean.activeUser.userRole.permission.update}" value="Delete"  action="#{offenceClassificationBean.delete(offonceClassif)}" update="@form">
+                                <p:confirm header="Confirmation" message="Do you really want to delete this record" icon="pi pin-info-circle"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </b:panel>
+                <b:panel rendered="#{offenceClassificationBean.add}" collapsed="false"  collapsible="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{offenceClassificationBean.panelTitleName}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Classification Type"/>
+                            <p:selectOneMenu value="#{offenceClassificationBean.entity.classificationType}" required="true" converter="entityConverter" requiredMessage="Select classification type">
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{offenceClassificationBean.classificationTypes}" var="classifType" itemLabel="#{classifType.toString()} " itemValue="#{classifType}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Description"/>
+                            <b:inputText field-size="lg" value="#{offenceClassificationBean.entity.description}"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="success" action="#{offenceClassificationBean.save(offenceClassificationBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{offenceClassificationBean.cancel(offenceClassificationBean.entity)}" immediate="true" update="@form"/>
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

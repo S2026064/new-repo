@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel collapsed="false" closable="false">
+            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:dataTable id="attachmentTableID" value="#{sharedBean.entity.attachments}" var="attachment" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <p:column headerText="Code" styleClass="large">
+                            <h:outputText value="#{attachment.code}"/>
+                        </p:column>
+                        <p:column headerText="Description">
+                            <h:outputText value="#{attachment.description}"/>
+                        </p:column>
+                        <p:column headerText="Size" styleClass="large">
+                            <h:outputText value="#{attachment.documentSize}"/>
+                        </p:column>
+                    </p:dataTable>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

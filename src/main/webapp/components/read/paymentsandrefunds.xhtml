@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.paymentsandrefunds}" var="paymentAndRefund" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="20">
+                <p:column headerText="Ref Nbr">
+                    <h:outputText value="#{paymentAndRefund.refNumber}"/>
+                </p:column>
+                <p:column headerText="Acc Typer">
+                    <h:outputText value="#{paymentAndRefund.accountType}"/>
+                </p:column>
+                <p:column headerText="Year">
+                    <h:outputText value="#{paymentAndRefund.paymentRefundYear}"/>
+                </p:column>
+                <p:column headerText="Category">
+                    <h:outputText value="#{paymentAndRefund.category}"/>
+                </p:column>
+                <p:column headerText="Payment">
+                    <h:outputText value="#{paymentAndRefund.payment}"/>
+                </p:column>
+                <p:column headerText="Unallocated Payment">
+                    <h:outputText value="#{paymentAndRefund.unallocatedPayment}"/>
+                </p:column>
+                <p:column headerText="Refunds">
+                    <h:outputText value="#{paymentAndRefund.refund}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

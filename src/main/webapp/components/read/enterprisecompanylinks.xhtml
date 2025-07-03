@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >                       
+            <ui:repeat value="#{sharedBean.enterprisecompanylinks}" var="enterpriceCompanyLink" varStatus="linkStatus">
+                <p:fieldset legend="Enterprise Company Link  :#{linkStatus.index+1}">
+                    <b:panelGrid colSpans="3,3,3,3" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Ref Nbr"/>
+                            <p:inputText value="#{enterpriceCompanyLink.refNumber}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Name"/>
+                            <p:inputText value="#{enterpriceCompanyLink.name}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Link Type"/>
+                            <p:inputText value="#{enterpriceCompanyLink.linkType}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Link Name"/>
+                            <p:inputText value="#{enterpriceCompanyLink.linkName}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Link ID"/>
+                            <p:inputText value="#{enterpriceCompanyLink.linkId}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Link Share"/>
+                            <p:inputText value="#{enterpriceCompanyLink.share}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Comp Cnt"/>
+                            <p:inputText value="#{enterpriceCompanyLink.compCnt}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Listed"/>
+                            <p:inputText value="#{enterpriceCompanyLink.listed}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Dir Cnt"/>
+                            <p:inputText value="#{enterpriceCompanyLink.dirCnt}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="IT Turnover"/>
+                            <p:inputText value="#{enterpriceCompanyLink.itTurnOver}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="IT Ass Year"/>
+                            <p:inputText value="#{enterpriceCompanyLink.itAssYear}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Tot Out Debt"/>
+                            <p:inputText value="#{enterpriceCompanyLink.totOutDebt}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Tot Out Return"/>
+                            <p:inputText value="#{enterpriceCompanyLink.totOutReturn}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Properties"/>
+                            <p:inputText value="#{enterpriceCompanyLink.properties}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Vehicles"/>
+                            <p:inputText value="#{enterpriceCompanyLink.vehicles}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Aircraft"/>
+                            <p:inputText value="#{enterpriceCompanyLink.airCraft}"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                </p:fieldset>
+                <p:spacer height="5px"/>
+            </ui:repeat>
+        </p:panel>
+    </ui:component>
+</html>

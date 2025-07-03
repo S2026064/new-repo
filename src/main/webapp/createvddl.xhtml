@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{vddlBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="My VD/DL" styleClass="panel-title-css"/>
+                            <p:separator/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable value="#{vddlBean.vddl}" var="vddl" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <f:facet name="header">
+                            <p:toolbar>
+                                <f:facet name="left">
+                                    <b:commandButton iconSize="lg" iconAwesome="fa-plus" look="primary" value="Add" disabled="#{not vddlBean.activeUser.userRole.permission.add}" action="#{vddlBean.addOrUpdate(null)}" update="@form"/>
+                                </f:facet>
+                            </p:toolbar>
+                        </f:facet>
+                        <p:column headerText="Added Date">
+                            <h:outputText value="#{vddl.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{vddl.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Case Referrence">
+                            <h:outputText value="#{vddl.caseRefNumber}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{vddl.vddlStatus.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton disabled="#{not vddlBean.activeUser.userRole.permission.update}" rendered="#{vddl.vddlStatus eq 'NEW'}" look="primary" size="xs" value="Edit" icon-size="xs" iconBrand="5.2.0" iconAwesome="fa-pencil"  action="#{vddlBean.addOrUpdate(vddl)}" update="@form"/>
+                            <p:spacer width="10px"/>
+                            <b:commandButton disabled="#{not vddlBean.activeUser.userRole.permission.delete}" rendered="#{vddl.vddlStatus eq 'NEW'}" look="danger" size="xs" value="Del" icon-size="xs" iconBrand="5.2.0" iconAwesome="fa-trash" action="#{vddlBean.delete(vddl)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>
+                </b:panel>
+                <b:panel  rendered="#{vddlBean.search}" look="default"  collapsible="false">
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <p:outputLabel value="Search by Custom/Excise code" styleClass="panel-title-css"/>
+                        <p:separator/>
+                        <b:formGroup>
+                            <b:inputText value="#{vddlBean.customExciseCode}" placeholder="Search by Custom/Excise Code">
+                                <f:facet name="prepend">
+                                    <p:outputLabel value="Search"/>
+                                </f:facet>
+                                <f:facet name="append">
+                                    <b:commandButton icon-awesome="search" value="Search" look="primary" action="#{vddlBean.searchByCustomExciseCode(vddlBean.customExciseCode)}" ajax="false" update="@form"/>
+                                </f:facet>
+                            </b:inputText>
+                        </b:formGroup>
+                    </b:panelGrid>
+                </b:panel>
+                <b:panel collapsible="false" rendered="#{vddlBean.add}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="Add VD/DL" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <p:accordionPanel widgetVar="basic">
+                            <p:tab title="Case Details">
+                                <b:formGroup>
+                                    <p:outputLabel value="Case Ref Number"/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.caseRefNumber}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Case Status "/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.vddlStatus.toString()}" field-size="lg"/>
+                                </b:formGroup>
+                            </p:tab>
+                            <p:tab title="Captures Particulars">
+                                <b:formGroup>
+                                    <p:outputLabel value="SID"/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.user.sid}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Full Names"/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.user.fullNames}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Office"/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.user.locationOffice.area}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Region"/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.user.region.description}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Department Division"/>
+                                    <b:inputText readonly="true" value="#{vddlBean.entity.user.division.description}" field-size="lg"/>
+                                </b:formGroup>
+                            </p:tab>
+                            <p:tab title="Registration Particular as per IBR Data">
+                                <b:panel>
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                        <b:formGroup>
+                                            <p:outputLabel value="IBR Customs Nbr"/>
+                                            <b:inputText readonly="true" value="#{vddlBean.entity.ibrData.ibrCustomsNumber}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel  value="Customs Code"/>
+                                            <b:inputText readonly="true" value="#{vddlBean.entity.ibrData.customsCode}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Registered Name"/>
+                                            <b:inputText value="#{vddlBean.entity.ibrData.registrationName}" maxlength="72" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Trading Name"/>
+                                            <b:inputText value="#{vddlBean.entity.ibrData.tradingName}" maxlength="72" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Nature of Business Income Tax"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.natureOfBusinessIncomeTax}" maxlength="117" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Postal Address"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.postalAddress}" maxlength="122" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Physical Address"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.physicalAddress}" maxlength="147" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Telephone Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.contactDetails.homeTelephoneNumber}" maxlength="13" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Fax Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.contactDetails.faxNumber}" maxlength="13" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Email"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.contactDetails.emailAddress}" maxlength="48" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Website Address"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.contactDetails.webAddress}" maxlength="100" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="auditors(CIPC)"/>
+                                            <b:inputText value="#{vddlBean.entity.ibrData.auditorsCipc}" maxlength="126" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Attorneys"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.attorneys}" maxlength="3" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Restricted Taxpayer"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.restrictedTaxPayer}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Company Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.companyNumber}" maxlength="14" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Income Tax Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.incomeTaxNumber}" maxlength="10" mask="numeric"  field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="VAT Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.vatNumber}" maxlength="10" mask="numeric" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="UIF Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.uifNumber}" maxlength="10" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="PAYE Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.payeNumber}" maxlength="10" mask="numeric"  field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="SDL Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.sdlNumber}" maxlength="10" mask="numeric"  field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="SAP Fin Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.sapFinNumber}" maxlength="10" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="OS/SOS Number"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.sdlNumber}" maxlength="10" mask="numeric"  field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Bond/ Surety Amount"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.bondSuretyAmount}" mask="numeric"  field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Linked Customs Codes"/>
+                                            <b:inputText  value="#{vddlBean.entity.ibrData.linkedCustomsCodes}" maxlength="100" field-size="lg"/>
+                                        </b:formGroup>
+                                    </b:panelGrid>
+                                </b:panel>
+                            </p:tab>
+                            <p:tab title="Public Officer Contact Details">
+                                <b:panel>
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                        <b:formGroup>
+                                            <p:outputLabel value="Company Status"/>
+                                            <b:inputText value="#{vddlBean.entity.publicOfficer.companyStatus}" maxlength="50"  field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Officer Surname"/>
+                                            <b:inputText value="#{vddlBean.entity.publicOfficer.lastName}" maxlength="50" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Officer First Names"/>
+                                            <b:inputText value="#{vddlBean.entity.publicOfficer.fullNames}" maxlength="100" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Office Telephone Number"/>
+                                            <b:inputText value="#{vddlBean.entity.publicOfficer.contactDetails.workTelephoneNumber}" maxlength="13" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Email"/>
+                                            <b:inputText value="#{vddlBean.entity.publicOfficer.contactDetails.emailAddress}" maxlength="50" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Cellphone Number"/>
+                                            <b:inputText value="#{vddlBean.entity.publicOfficer.contactDetails.mobileNumber}" maxlength="13" field-size="lg"/>
+                                        </b:formGroup>
+                                    </b:panelGrid>
+                                </b:panel>
+                            </p:tab>
+                            <p:tab title="Customs Excise Client Type">
+                                <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Exporter" value="#{vddlBean.entity.customsExciseClientType.exporter}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Importer" value="#{vddlBean.entity.customsExciseClientType.importer}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Manufacturer" value="#{vddlBean.entity.customsExciseClientType.manufacturer}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Licensee" value="#{vddlBean.entity.customsExciseClientType.licensee}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Registrant" value="#{vddlBean.entity.customsExciseClientType.registrant}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Warehouse" value="#{vddlBean.entity.customsExciseClientType.warehouse}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Depot" value="#{vddlBean.entity.customsExciseClientType.depot}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Terminal" value="#{vddlBean.entity.customsExciseClientType.terminal}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Agent" value="#{vddlBean.entity.customsExciseClientType.agent}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Remover" value="#{vddlBean.entity.customsExciseClientType.remover}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Other" value="#{vddlBean.entity.customsExciseClientType.other}">
+                                            <p:ajax update="customsExciseTab" event="change" />
+                                        </p:selectBooleanCheckbox>
+                                    </b:formGroup>
+                                </b:panelGrid>
+                                <h:panelGroup id="customsExciseTab">
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid" rendered="#{vddlBean.entity.customsExciseClientType.other}">
+                                        <b:formGroup>
+                                            <p:outputLabel value="Description"/>
+                                            <b:inputText value="#{vddlBean.entity.customsExciseClientType.otherDescription}" field-size="lg"/>
+                                        </b:formGroup>
+                                    </b:panelGrid>
+                                </h:panelGroup>
+                            </p:tab>
+                            <p:tab title="VDDL Type">
+                                <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Cancellations" value="#{vddlBean.entity.vddlType.cancellations}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Default on deferment" value="#{vddlBean.entity.vddlType.defaultOnDefement}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Rules of Origin" value="#{vddlBean.entity.vddlType.ruleOfOrigin}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Refunds" value="#{vddlBean.entity.vddlType.refunds}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Application for substitution " value="#{vddlBean.entity.vddlType.appSubstitutionOvertimeGoods}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Other applications from sureties" value="#{vddlBean.entity.vddlType.otherAppSureties}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Stockist account (DA 490)" value="#{vddlBean.entity.vddlType.stocklistAccountDa490}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Application to bring duty to account" value="#{vddlBean.entity.vddlType.appDutyAccount}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="VDN/TDN applications" value="#{vddlBean.entity.vddlType.vdnTdnApp}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="APDP Account" value="#{vddlBean.entity.vddlType.apdpAccount}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Liquidations" value="#{vddlBean.entity.vddlType.liquidations}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Warehouse Approvals" value="#{vddlBean.entity.vddlType.warehouseApprovals}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Rebate Approvals" value="#{vddlBean.entity.vddlType.rebateApprovals}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Approved Exporter Verifications" value="#{vddlBean.entity.vddlType.approvedExporterVerifications}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="MAA Verifications and Requests" value="#{vddlBean.entity.vddlType.maaVerificationsRequest}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="TIU Case Hand Over" value="#{vddlBean.entity.vddlType.tiuCaseHandOver}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Branch Ops Case Hand Over" value="#{vddlBean.entity.vddlType.branchOpHandOver}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Head Office Case Referral" value="#{vddlBean.entity.vddlType.headOfficeCaseReferral}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="SARS Service Manager Case Referral" value="#{vddlBean.entity.vddlType.sarsServiceManagerCaseReferral}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Acquittals" value="#{vddlBean.entity.vddlType.acquittals}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:selectBooleanCheckbox itemLabel="Other" value="#{vddlBean.entity.vddlType.other}">
+                                            <p:ajax event="change" update="vddlTypeLabel" />
+                                        </p:selectBooleanCheckbox>
+                                    </b:formGroup>
+                                </b:panelGrid>
+                                <h:panelGroup id="vddlTypeLabel">
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid" rendered="#{vddlBean.entity.vddlType.other}">
+                                        <b:formGroup>
+                                            <p:outputLabel value="Description"/>
+                                            <b:inputText value="#{vddlBean.entity.vddlType.otherDescription}" field-size="lg"/>
+                                        </b:formGroup>
+                                    </b:panelGrid>
+                                </h:panelGroup>
+                            </p:tab>
+                            <p:tab title="Instructions / Reason for Audit /Request">
+                                <b:formGroup>
+                                    <p:outputLabel value="Instructions"/>
+                                    <p:inputTextarea required="true" requiredMessage="Enter reason for audit request" value="#{vddlBean.entity.instruction}"/>
+                                </b:formGroup>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </b:panelGrid>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Submit" look="success" action="#{vddlBean.submit(vddlBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="primary" action="#{vddlBean.save(vddlBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{vddlBean.cancel(vddlBean.entity)}" immediate="true" update="@form"/>
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

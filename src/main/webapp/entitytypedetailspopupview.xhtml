@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <o:massAttribute name="disabled" value="true">
+                    <p:panel closable="false" collapsed="false">
+                        <p:fieldset  legend="Entity Details">
+                            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Registration Name"/>
+                                    <p:inputText placeholder="Enter registration name" value="#{entityTypeDetailsBean.entity.registeredName}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Trading Name"/>
+                                    <p:inputText  placeholder="Enter trading name" value="#{entityTypeDetailsBean.entity.tradingName}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Company Number"/>
+                                    <p:inputText placeholder="Enter company number" value="#{entityTypeDetailsBean.entity.companyNumber}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                        <p:separator/>
+                        <p:fieldset  legend="Business Address">
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Complex Number"/>
+                                    <p:inputText  maxlength="6"  value="#{entityTypeDetailsBean.entity.businessAddress.line1}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Complex Name"/>
+                                    <p:inputText placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.line2}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Street Number"/>
+                                    <p:inputText  maxlength="6" placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.line3}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Street Name"/>
+                                    <p:inputText placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.line4}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="City/Town"/>
+                                    <p:inputText placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.area}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Postal Code"/>
+                                    <p:inputText  maxlength="4" placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.code}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Country Name"/>
+                                    <p:inputText  maxlength="4" placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.countryName}"/>
+                                </b:formGroup>
+                                <b:formGroup  rendered="#{entityTypeDetailsBean.entity.businessAddress.countryName eq 'South Africa'}">
+                                    <p:outputLabel value="Province"/>
+                                    <p:inputText  maxlength="4" placeholder="" value="#{entityTypeDetailsBean.entity.businessAddress.province}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                    </p:panel>
+                </o:massAttribute>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

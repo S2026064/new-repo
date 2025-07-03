@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <b:panelGrid  colSpans="6,6" size="lg" style-class="ui-fluid">  
+                <b:formGroup>
+                    <p:outputLabel value="Did you wish to disclose your personal details?"/>
+                    <b:inputText value="#{sharedEntity.sarCase.disclosePersonalDetails.toString()}" field-size="lg"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Are you willing to provide an affidavit in respect of this non compliance being reported?"/>
+                    <b:inputText value="#{sharedEntity.sarCase.affidavit.toString()}" field-size="lg"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Last Name"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.lastName}" maxlength="50" field-size="lg" required="true" requiredMessage="Please enter your surname"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Initials"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.initials}" maxlength="3" field-size="lg" required="true" requiredMessage="Please enter initials"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="First Name"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.firstName}" maxlength="100" field-size="lg" required="true" requiredMessage="Please enter your first two names"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Home Telephone Number"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.homeTelephoneNumber}" mask="9{1,999}" maxlength="10" field-size="lg" required="true" requiredMessage="Min Number should be 10"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Work Telephone Number"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.workTelephoneNumber}" mask="9{1,999}" maxlength="10" required="true" field-size="lg" requiredMessage="Min Number should be 10"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Mobile Number"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.mobileNumber}" mask="9{1,999}" maxlength="10" field-size="lg" required="true" requiredMessage="Min Number should be 10"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Fax number"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.faxNumber}" maxlength="10" field-size="lg"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Email Address"/>
+                    <b:inputText value="#{sharedEntity.sarCase.reportingPerson.emailAddress}" maxlength="50" mask="email" required="true" field-size="lg" rendered="true" requiredMessage="The Email you have entered does not seem to be valid. Please ensure that it is correct"/>
+                </b:formGroup>                        
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

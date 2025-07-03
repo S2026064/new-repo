@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" id="entity_type_details_2024">
+            <b:panelGrid colSpans="2,10" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Total Penalty"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalPenalty}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+            </b:panelGrid>
+            <b:panelGrid colSpans="2,10" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Description"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value=" Total"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Customs Duty"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalCustomsDuty}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Excise Duty"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalExciseDuty}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Other "/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalDutyOther}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Customs Interest"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalCustomsInterest}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Vat"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalVat}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Vat Interest"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalVatInterest}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Vat Penalty"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText readonly="true" value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.totalVatPenalty}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Liability"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <b:inputText  readonly="true"  value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.liabilitiesTotal}" field-size="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

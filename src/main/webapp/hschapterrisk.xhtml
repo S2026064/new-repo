@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel rendered="#{hsChapterRiskBean.list}" look="default"  collapsible="false">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="#{hsChapterRiskBean.panelTitleName}" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable globalFilterOnly="true" widgetVar="hschapterTable" rowIndexVar="rowIndex" value="#{hsChapterRiskBean.hsChapterRisks}" var="hsChapterRisk" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="15">
+                        <f:facet name="header">                          
+                            <p:toolbar>
+                                <p:toolbarGroup>
+                                    <b:commandButton style="width:30rem" large-screen="full-width" iconSize="md" size="lg" icon="plus" look="primary" value="New" disabled="#{not hsChapterRiskBean.activeUser.userRole.permission.add}" action="#{hsChapterRiskBean.addOrUpdate(null)}" update="@form"/>
+                                </p:toolbarGroup>
+                                <p:toolbarGroup align="right">
+                                    <p:inputText placeholder="Filter by all fields" id="globalFilter" style="width:30rem" onkeyup="PF('hschapterTable').filter()"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                        </f:facet>
+                        <p:column headerText="No." styleClass="small">
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="Date" filterBy="#{hsChapterRisk.createdDate}">
+                            <h:outputText   value="#{hsChapterRisk.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Description" filterBy="#{hsChapterRisk.description}">
+                            <h:outputText value="#{hsChapterRisk.description}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="xlarge">
+                            <p:commandButton styleClass="ui-button-primary btn-size-sm" disabled="#{not hsChapterRiskBean.activeUser.userRole.permission.update}" value="Edit" action="#{hsChapterRiskBean.addOrUpdate(hsChapterRisk)}" update="@form"/>
+                            <p:spacer width="5px"/>
+                            <p:commandButton styleClass="ui-button-danger btn-size-sm" disabled="#{not hsChapterRiskBean.activeUser.userRole.permission.update}" value="Delete"  action="#{hsChapterRiskBean.delete(hsChapterRisk)}" update="@form">
+                                <p:confirm header="Confirmation" message="Do you really want to delete this record" icon="pi pin-info-circle"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </b:panel>
+                <b:panel rendered="#{hsChapterRiskBean.add}" look="default" collapsible="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{hsChapterRiskBean.panelTitleName}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Description"/>
+                                <b:inputText value="#{hsChapterRiskBean.entity.description}" required="true" requiredMessage="Please enter description" fieldSize="lg"/>
+                            </b:formGroup> 
+                        </b:panelGrid>
+                    </b:panelGrid>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" icon="check" value="Save" look="success" action="#{hsChapterRiskBean.save(hsChapterRiskBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" icon="remove" value="Cancel" look="danger" action="#{hsChapterRiskBean.cancel(hsChapterRiskBean.entity)}" immediate="true" update="@form"/>
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>  
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

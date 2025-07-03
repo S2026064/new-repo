@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:fieldset legend="SAR CASE Details">
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Case Status"/>
+                        <p:inputText placeholder="" readonly="true" value="#{sharedBean.entity.status.toString()}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Reference Number"/>
+                        <p:inputText readonly="true" value="#{sharedBean.entity.caseRefNumber}"/>
+                    </b:formGroup>  
+                    <b:formGroup>
+                        <p:outputLabel  value="Client Type"/>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.clientType}"  required="true" converter="entityConverter" requiredMessage="Select the client type">
+                            <p:ajax event="change" update="@form"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.clientTypes}" var="clientType"  itemLabel="#{clientType}" itemValue="#{clientType}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                    <p:outputPanel id="individual" styleClass="ui-fluid">
+                        <b:formGroup rendered="#{sharedBean.entity.sarCase.clientType eq 'TRAVELLER_INDIVIDUAL'}">
+                            <p:outputLabel value="Number of travellers/individuals"/>
+                            <p:inputText required="true" id="traveller_input"  requiredMessage="Enter number of traveller/individual"  value="#{sharedBean.entity.sarCase.numberOfTravellerIndividual}"   maxlength="3">
+                                <p:keyFilter for="traveller_input" regEx="/^[1-9][0-9]*$/"/>
+                            </p:inputText>
+                        </b:formGroup>
+                    </p:outputPanel>   
+                    <p:outputPanel id="company" styleClass="ui-fluid">        
+                        <b:formGroup  rendered="#{sharedBean.entity.sarCase.clientType eq 'COMPANY_TRADER_IMPORTER_EXPORTER'}">
+                            <p:outputLabel value="Number of Companies/traders/importers/exporters"/>
+                            <p:inputText id="company_input" required="true" requiredMessage="Enter number of company/trader/importer/exporter" value="#{sharedBean.entity.sarCase.numberOfCompanyTraderImportExport}"  maxlength="3">
+                                <p:keyFilter for="company_input" regEx="/^[1-9][0-9]*$/"/>
+                            </p:inputText>
+
+                        </b:formGroup>
+                    </p:outputPanel>    
+                    <b:formGroup>
+                        <p:outputLabel value="Customs/Excise"/>
+                        <p:selectOneMenu value="#{sharedBean.entity.sarCase.customExcise}" required="true" requiredMessage="Select the Customs/Excise"  converter="entityConverter">
+                            <f:selectItem  itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.customsExcises}" var="customsExcises" itemLabel="#{customsExcises}" itemValue="#{customsExcises}"/>
+                        </p:selectOneMenu>
+                    </b:formGroup>
+                </b:panelGrid>
+            </p:fieldset>
+        </p:panel>
+    </ui:component>
+</html>

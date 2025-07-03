@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <p:panel closable="false" collapsed="false">                       
+                    <p:fieldset  legend="Audit Details">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Risk Area"/>
+                                <p:selectOneMenu value="#{auditDetailsBean.entity.riskArea}" converter="entityConverter" required="true" requiredMessage="Select risk area">
+                                    <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{auditDetailsBean.riskAreas}" var="riskArea" itemLabel="#{riskArea.toString()}" itemValue="#{riskArea}"/>
+                                </p:selectOneMenu>
+                            </b:formGroup>
+                        </b:panelGrid>
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Scope"/>
+                                <b:inputTextarea  value="#{auditDetailsBean.entity.scope}" required="true" requiredMessage="Enter audit scope"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Objective"/>
+                                <b:inputTextarea  value="#{auditDetailsBean.entity.objective}" required="true" requiredMessage="Enter audit objective"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <b:commandButton look="success" value="Add"  size="md" large-screen="full-width" icon="check"  update="@form" action="#{auditDetailsBean.selectAuditDetailFromDialog(auditDetailsBean.entity)}"/>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <b:commandButton look="danger" value="Cancel"  size="md" large-screen="full-width" icon="remove" immediate="true"  update="@form" action="#{auditDetailsBean.cancelAuditDetailFromDialog()}"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>   
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <f:facet name="header">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:outputLabel value=""/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </f:facet>  
+            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:fieldset legend="Was there an Offence detected?">
+                        <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.wasOffenceDetected}" required="true" converter="entityConverter" requiredMessage="Select offence detection">
+                            <p:ajax event="change"  update="audit_report_id_2024"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="offence" itemLabel="#{offence.toString()}" itemValue="#{offence}"/>
+                        </p:selectOneMenu>
+                    </p:fieldset>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:fieldset legend="Is there Revenue liability?">
+                        <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.thereRevenueLiability}" required="true" converter="entityConverter" requiredMessage="Select revenue laibility">
+                            <p:ajax event="change" listener="#{sharedBean.onThereRevenueLiabilityListener}" update="audit_report_id_2024"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.yesNoOptions}" var="revenue" itemLabel="#{revenue.toString()}" itemValue="#{revenue}"/>
+                        </p:selectOneMenu>
+                    </p:fieldset>
+                </b:formGroup>
+            </b:panelGrid>
+            <p:spacer height="5px"/>
+            <p:fieldset legend="Factual Summary of audit findings">
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <b:inputTextarea value="#{sharedBean.entity.auditPlan.auditReport.findingsSummary}" placeholder="please enter Factual Summary of audit findings" rows="8" style="font-size: 14px;" required="true"  requiredMessage="Enter Factual Summary of audit findings"/>
+                    </b:formGroup>
+                </b:panelGrid>
+            </p:fieldset>
+            <f:facet name="footer">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:outputLabel value=""/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </f:facet>  
+        </p:panel>
+    </ui:component>
+</html>

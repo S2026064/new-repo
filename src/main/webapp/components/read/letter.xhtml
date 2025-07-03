@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable  value="#{sharedBean.entity.letters}" var="letter" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+               
+                <p:column headerText="Created By" styleClass="large">
+                    <h:outputText value="#{letter.createdBy}"/>
+                </p:column>
+                <p:column headerText="Created Date" styleClass="large">
+                    <h:outputText value="#{letter.createdDate}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Letter Head">
+                    <h:outputText value="#{letter.letterHead.toString()}"/>
+                </p:column>
+                 <p:column headerText="Action" styleClass="xlarge">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  value="View" action="#{sharedBean.addOrUpdateLetter(letter,'letterpopupview',sharedBean.entity.id)}" process="@this"/>
+                    <p:spacer width="5px"/>
+                     <p:commandButton rendered="#{sharedBean.entity.auditPlan.auditReport.createdBy eq activeUser.sid}" disabled="#{letter.approve eq 'NO' or activeUser.sid ne letter.createdBy}" styleClass="ui-button-primary btn-size-sm" icon="fa fa-fw fa-download"  ajax="false" actionListener="#{sharedBean.downloadLetter(letter)}" immediate="true"  update="@namingcontainer">
+                        <p:fileDownload value="#{sharedBean.downloadLetter}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

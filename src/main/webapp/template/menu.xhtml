@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:body>
+        <ui:composition>
+            <b:navBar brandStyle="font-size: smaller"  brand="Administration" fluid="true" styleClass="menucss"   brandHref="#" rendered="#{menuBean.activeUser.router.administrator}">
+                <b:navbarLinks style="font-size: smaller">
+                    <b:navCommandLink iconAwesome="fa-home" action="#{menuBean.route('/home')}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Roles" action="#{menuBean.route('/userroles')}" rendered="#{menuBean.activeUser.userRole.adminSetting.userRole}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Users" action="#{menuBean.route('/users')}" rendered="#{menuBean.activeUser.userRole.adminSetting.users}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="SLA Config" action="#{menuBean.route('/slaconfig')}" rendered="#{menuBean.activeUser.userRole.adminSetting.slaConfigs}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Office" action="#{menuBean.route('/office')}" rendered="#{menuBean.activeUser.userRole.adminSetting.locationOffice}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="HS Chapter Risk" action="#{menuBean.route('/hschapterrisk')}" rendered="#{menuBean.activeUser.userRole.adminSetting.hsChapterRisk}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Relevant Material" action="#{menuBean.route('/relevantmaterial')}" rendered="#{menuBean.activeUser.userRole.adminSetting.relevantMaterial}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Offence Classification" action="#{menuBean.route('/offenceClassification')}" rendered="#{menuBean.activeUser.userRole.adminSetting.offenceClassification}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Section Rule" action="#{menuBean.route('/sectionrule')}" rendered="#{menuBean.activeUser.userRole.adminSetting.sectionRule}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Offence Description" action="#{menuBean.route('/offencedescription')}" rendered="#{menuBean.activeUser.userRole.adminSetting.offenceDescription}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Program" action="#{menuBean.route('/programs')}" rendered="#{menuBean.activeUser.userRole.adminSetting.program}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Notification" action="#{menuBean.route('/notification')}" rendered="#{menuBean.activeUser.userRole.adminSetting.notification}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Duty" action="#{menuBean.route('/duty')}" rendered="#{menuBean.activeUser.userRole.adminSetting.duty}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Score" action="#{menuBean.route('/prioritisationscore')}" rendered="#{menuBean.activeUser.userRole.adminSetting.prioritisationScore}" immediate="true"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <b:navBar brandStyle="font-size: smaller"  brand="VDDL / SARCASE" fluid="true" styleClass="menucss"   brandHref="#" rendered="#{menuBean.activeUser.router.vddlOrSarCases}">
+                <b:navbarLinks style="font-size: smaller">
+                    <b:navCommandLink iconAwesome="fa-home" action="#{menuBean.route('/home')}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="VDDL / Sarcases" action="#{menuBean.route('/suspcasecreation')}" rendered="#{menuBean.activeUser.userRole.vddlOrSarCaseSetting.createSarCase}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Reviews" action="#{menuBean.routeForReview()}" rendered="#{menuBean.activeUser.userRole.vddlOrSarCaseSetting.reviewSarCase}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Allocation / Re-Assign" action="#{menuBean.route('/suspcaseallocation')}" rendered="#{menuBean.activeUser.userRole.vddlOrSarCaseSetting.allocateSarCase}" immediate="true"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <b:navBar brandStyle="font-size: smaller"  brand="RISK MANAGEMENT" fluid="true" styleClass="menucss"   brandHref="#" rendered="#{menuBean.activeUser.router.riskAssessment}">
+                <b:navbarLinks style="font-size: smaller">
+                    <b:navCommandLink iconAwesome="fa-home" action="#{menuBean.route('/home')}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Indepth Analysis" action="#{menuBean.route('/suspcaseriskindepthanalysis')}" rendered="#{menuBean.activeUser.userRole.riskManagementSettting.indepthAnalysis}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="New Risk / Rework Risk" action="#{menuBean.route('/suspcaseriskcreation')}" rendered="#{menuBean.activeUser.userRole.riskManagementSettting.newRisk}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Completed Risk" action="#{menuBean.route('/suspcaseriskcompleted')}" rendered="#{menuBean.activeUser.userRole.riskManagementSettting.completedRisk}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Review Risk" action="#{menuBean.route('/suspcaseriskreview')}" rendered="#{menuBean.activeUser.userRole.riskManagementSettting.reviewRisk}" immediate="true"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <b:navBar brandStyle="font-size: smaller"  brand="AUDITING" fluid="true" styleClass="menucss"   brandHref="#" rendered="#{menuBean.activeUser.router.auditing}">
+                <b:navbarLinks style="font-size: smaller">
+                    <b:navCommandLink iconAwesome="fa-home" action="#{menuBean.route('/home')}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Allocation/Re-Assign" action="#{menuBean.route('/suspcaseauditplanallocation')}" rendered="#{menuBean.activeUser.userRole.auditingSetting.allocateAuditPlan}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="New Plan / Rework Plan" action="#{menuBean.route('/suspcaseauditplancreation')}" rendered="#{menuBean.activeUser.userRole.auditingSetting.createAuditPlan}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Plan Review" action="#{menuBean.route('/suspcaseauditplanreview')}" rendered="#{menuBean.activeUser.userRole.auditingSetting.reviewAuditPlan}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="New Report / Rework Report" action="#{menuBean.route('/suspcaseauditreportcreation')}" rendered="#{menuBean.activeUser.userRole.auditingSetting.createAuditReport}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Report Review" action="#{menuBean.route('/suspcaseauditreportreview')}" rendered="#{menuBean.activeUser.userRole.auditingSetting.reviewAuditReport}" immediate="true"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
+
+            <b:navBar brandStyle="font-size: smaller"  brand="DEDT MANAGEMENT" fluid="true" styleClass="menucss"   brandHref="#" rendered="#{menuBean.activeUser.router.debtManagement}">
+                <b:navbarLinks style="font-size: smaller">
+                    <b:navCommandLink iconAwesome="fa-home" action="#{menuBean.route('/home')}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Collections" action="#{menuBean.route('/suspcasecollection')}" rendered="#{menuBean.activeUser.userRole.debtManagementSetting.create}" immediate="true"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <b:navBar brandStyle="font-size: smaller" brand="Reports" fluid="true" styleClass="menucss"   brandHref="#" rendered="#{menuBean.activeUser.router.reports}">
+                <b:navbarLinks style="font-size: smaller">
+                    <b:navCommandLink iconAwesome="fa-home" action="#{menuBean.route('/home')}" immediate="true"></b:navCommandLink>
+                    <b:navCommandLink value="Draw Report" action="#{menuBean.route('/report')}" rendered="#{menuBean.activeUser.userRole.reportSetting.report}" immediate="true"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar> 
+        </ui:composition>
+    </h:body>
+</html>
+
+

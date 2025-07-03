@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{suspCaseReassignmentBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Suspicious Activity Report Cases" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable value="#{suspCaseReassignmentBean.sarCases}" var="sar" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <p:column  headerText="Date">
+                            <h:outputText value="#{sar.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{sar.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Refference">
+                            <h:outputText value="#{sar.reference}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{sar.status.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="xmedium">
+                            <b:commandButton disabled="#{not suspCaseReassignmentBean.activeUser.userRole.permission.update}" look="primary" size="sm" value="Re-Assign"   action="#{suspCaseReassignmentBean.addOrUpdate(sar)}" process="@form" update="@form"/>
+                        </p:column>
+                    </p:dataTable>                    
+                </b:panel>
+                <b:panel collapsible="false" rendered="#{suspCaseReassignmentBean.add}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="Reverse / Re-Assign SAR Case" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <p:panel closable="false" collapsed="false">
+                        <p:fieldset legend="SAR CASE Reference Details">
+                            <o:massAttribute name="readonly" value="true">
+                                <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                    <b:formGroup>
+                                        <p:outputLabel value="Case Status"/>
+                                        <p:inputText placeholder="" value="#{suspCaseReassignmentBean.entity.status.toString()}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:outputLabel value="Case Number"/>
+                                        <p:inputText value="#{suspCaseReassignmentBean.entity.reference}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:outputLabel value="Customs/Excise Code"/>
+                                        <p:inputText placeholder="" value="#{suspCaseReassignmentBean.entity.customExciseCode}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:outputLabel value="Company/Registered Number"/>
+                                        <p:inputText placeholder="" value="#{suspCaseReassignmentBean.entity.companyNumber}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:outputLabel value="Income Tax Number"/>
+                                        <p:inputText placeholder="" value="#{suspCaseReassignmentBean.entity.incomeTax}"/>
+                                    </b:formGroup>
+                                    <b:formGroup>
+                                        <p:outputLabel value="VAT Number"/>
+                                        <p:inputText placeholder="" value="#{suspCaseReassignmentBean.entity.vat}"/>
+                                    </b:formGroup>
+                                </b:panelGrid>
+                            </o:massAttribute>
+                        </p:fieldset>
+                        <p:spacer height="5px"/>
+                        <p:fieldset legend="Reverse / Re-Assign SAR Case by Status">
+                            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:selectOneMenu styleClass="ui-fluid" value="#{suspCaseReassignmentBean.entity.status}" required="true" requiredMessage="Select SAR Case status to re-assign or reverse"  converter="entityConverter">
+                                        <f:selectItem  itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{suspCaseReassignmentBean.sarCaseStatuses}" var="stat" itemLabel="#{stat.toString()}" itemValue="#{stat}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                    </p:panel>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Reverse / Re-Assign" icon="check" look="success" action="#{suspCaseReassignmentBean.reAssign(suspCaseReassignmentBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{suspCaseReassignmentBean.cancel(suspCaseReassignmentBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

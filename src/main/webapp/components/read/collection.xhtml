@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:fieldset legend="Debt Management Payment Details" >
+                <b:formGroup>
+                    <p:outputLabel value="Amount Collected"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.debtManagement.collectedAmount}"  maxlength="18" fieldSize="lg">
+                      <f:convertNumber currencyCode="ZAR" currencySymbol="R" pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <p:spacer width="5px"/>
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                    <p:selectBooleanCheckbox itemLabel="Debt Management Proof of Payment Attached" value="#{sharedBean.entity.auditPlan.auditReport.debtManagement.debtProofOfPayment}"/>
+                </b:panelGrid>
+            </p:fieldset>
+        </p:panel>
+    </ui:component>
+</html>

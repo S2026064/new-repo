@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Were any additional risks identified and not addressed as part of this case that requires a risk assessment from CRCS?"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRiskIdentified}" required="true" converter="entityConverter" requiredMessage="Select additional risk identified">
+                        <p:ajax event="change" listener="#{sharedBean.onAdditionalRiskIdentifiedListener}"  process="@this" update="additional_risk_panel_2024"/>
+                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                        <f:selectItems value="#{sharedBean.yesNoOptions}" var="risk" itemLabel="#{risk.toString()}" itemValue="#{risk}"/>
+                    </p:selectOneMenu>
+                </b:formGroup>
+            </b:panelGrid>   
+            <p:outputPanel id="additional_risk_panel_2024">
+                <b:panelGrid rendered="#{sharedBean.entity.auditPlan.auditReport.additionalRiskIdentified eq 'YES'}" colSpans="12" size="lg" style-class="ui-fluid">
+                    <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Risk Area"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Risk Identified?"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Description of risks identified"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Contravention History"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.contraventionHistory}" required="true" converter="entityConverter" requiredMessage="Select Contravention History">
+                                <p:ajax event="change" process="@this"  update="addtional_risk_contraTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <p:outputPanel id="addtional_risk_contraTab">
+                            <b:formGroup>
+                                <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.contraventionHistoryDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.contraventionHistory eq 'NO'}" field-size="lg"/>
+                            </b:formGroup>
+                        </p:outputPanel>
+                        <b:formGroup>
+                            <p:outputLabel value="Country Of Origin"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.originCountry}" required="true" converter="entityConverter" requiredMessage="Select Country Of Origin">
+                                <p:ajax event="change" process="@this"  update="addtional_risk_countryTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_countryTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.originCountryDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.originCountry eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Duty Exemption Regimes"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutyExemption}" required="true" converter="entityConverter" requiredMessage="Select Duty Exemption Regimes">
+                                <p:ajax event="change"   update="addtional_risk_dutyExempTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_dutyExempTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutyExemptionDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutyExemption eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Duty Suspension"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutySuspension}" required="true" converter="entityConverter" requiredMessage="Select Duty Suspension">
+                                <p:ajax event="change"   update="addtional_risk_dutySuspTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_dutySuspTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutySuspensionDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutySuspension eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Licensing and Registration"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.licensingAndRegistration}" required="true" converter="entityConverter" requiredMessage="Select Licensing and Registration">
+                                <p:ajax event="change"   update="addtional_risk_licenceRegTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_licenceRegTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.licensingAndRegistrationDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.licensingAndRegistration eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Mode of Transport"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.modeOfTransport}" required="true" converter="entityConverter" requiredMessage="Select Mode of Transport">
+                                <p:ajax event="change"   update="addtional_risk_modeOfTransTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_modeOfTransTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.modeOfTransportDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.modeOfTransport eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Other P and R (excluding drugs and precursors)"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.otherPAndR}" required="true" converter="entityConverter" requiredMessage="Select Other P and R (excluding drugs and precursors)">
+                                <p:ajax event="change"   update="addtional_risk_otherPandRTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_otherPandRTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.otherPAndRDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.otherPAndR eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Revenue Protection"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.revenueProtection}" required="true" converter="entityConverter" requiredMessage="Select Revenue Protection">
+                                <p:ajax event="change"   update="addtional_risk_revProtectionTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_revProtectionTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.revenueProtectionDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.revenueProtection eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Rules of Origin"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.rulesOfOrigin}" required="true" converter="entityConverter" requiredMessage="Select Rules of Origin">
+                                <p:ajax event="change"   update="addtional_risk_rulesOfOriginTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_rulesOfOriginTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.rulesOfOriginDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.rulesOfOrigin eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Security"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.security}" required="true" converter="entityConverter" requiredMessage="Select Security">
+                                <p:ajax event="change"   update="addtional_risk_securityTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_securityTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.securityDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.security eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Tariff"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tarrif}" required="true" converter="entityConverter" requiredMessage="Select Tariff">
+                                <p:ajax event="change"   update="addtional_risk_tarrifTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_tarrifTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified" value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tarrifDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tarrif eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Trade Restrictions"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tradeRestrictions}" required="true" converter="entityConverter" requiredMessage="Select Trade Restrictions">
+                                <p:ajax event="change"   update="addtional_risk_tradeTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_tradeTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified"  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tradeRestrictionDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tradeRestrictions eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Valuation"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.valuation}" required="true" converter="entityConverter" requiredMessage="Select valuation">
+                                <p:ajax event="change"  update="addtional_risk_valuationTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_valuationTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified" value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.valuationDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.valuation eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Warehousing"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.warehousing}" required="true" converter="entityConverter" requiredMessage="Select warehousing">
+                                <p:ajax event="change"  update="addtional_risk_wareHousingTab"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{sharedBean.yesNoOptions}" var="yesNoOption" itemLabel="#{yesNoOption.toString()}" itemValue="#{yesNoOption}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup id="addtional_risk_wareHousingTab">
+                            <b:inputTextarea required="true" requiredMessage="Enter Description of risks identified" value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.warehousingDescription}" disabled="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.warehousing eq 'NO'}" field-size="lg"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                </b:panelGrid>
+            </p:outputPanel>
+        </p:panel>
+    </ui:component>
+</html>

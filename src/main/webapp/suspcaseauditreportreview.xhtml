@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{suspCaseAuditReportReviewBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Suspicious Activity Report Cases" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>   
+                    <p:dataTable value="#{suspCaseAuditReportReviewBean.suspiciousCases}" var="susp" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <p:column  headerText="Date">
+                            <h:outputText value="#{susp.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{susp.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Case Ref Number">
+                            <h:outputText value="#{susp.caseRefNumber}"/>
+                        </p:column>
+                        <p:column headerText="Type">
+                            <h:outputText value="#{susp.caseType.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{susp.status.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton  look="primary" size="md" value="Review" icon-size="md" iconBrand="5.2.0" iconAwesome="fa-list"  action="#{suspCaseAuditReportReviewBean.viewSuspCase(susp)}" process="@form" update="@form"/>
+                        </p:column>
+                    </p:dataTable>                              
+                </b:panel>
+                <b:panel collapsible="false" rendered="#{suspCaseAuditReportReviewBean.add}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'?'Suspicious Activity Report Case':'Voluntary Disclosure or Demand Led Case'}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:tabView>
+                        <b:tab title="Case Details" ajax="true">
+                            <p:accordionPanel  dynamic="true">
+                                <p:tab title="Capturer's Particulars">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/capturerparticulars.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}"   title="Non Compliance Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/noncompliancedetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}"   title="Person Reporting Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/reportingpersondetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'VDDL'}" title="Customs Excise Client Type">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/customsexciseclienttype.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'VDDL'}" title="Voluntary Disclosure or Deman Led Type">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/voluntarydisclosuredemandled.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'VDDL'}" title="Instructions / Reason for Audit /Request">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <p:panel>
+                                            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                                <b:formGroup>
+                                                    <p:fieldset legend="Instructions">
+                                                        <b:inputTextarea value="#{suspCaseAuditReportReviewBean.entity.vddLed.instruction}"/>
+                                                    </p:fieldset>
+                                                </b:formGroup>
+                                            </b:panelGrid>
+                                        </p:panel>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+                        <b:tab title="IBR Data">
+                            <p:accordionPanel rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordionPanel_2024" dynamic="true">
+                                <p:ajax event="tabChange" listener="#{suspCaseAuditReportReviewBean.onTabChange}"  process="@this"/>
+                                <p:tab id="risk_accordion_tab_002_registparticularsperibr" title="Registration Particulars as per IBR">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/registparticularsperibr.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>          
+                                <p:tab  id="risk_accordion_tab_003_customsregistparticulars"  title="Customs Registration Particulars">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/customsregistparticulars.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_004_directordetails" title="Director Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/directordetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_005_customsturnover" title="Customs Turnover">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/customsturnover.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_006_top10commoditiesimported" title="Top 10 Commodities Imported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10commoditiesimported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_007_top10commoditiesexported" title="Top 10 Commodities Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10commoditiesexported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_008_topcommoditieswharehouse" title="Top 10 Commodities Wharehouse per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/topcommoditieswharehouse.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_009_top10transitcommodities" title="Top 10 Transit Commodities per Customs Value for last 24 Months">
+                                    <ui:include src="/components/read/top10transitcommodities.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                    </ui:include>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_010_top10countriesoforigin" title="Top 10 Countries of Origin Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10countriesoforigin.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_011_top10purposecodesxported" title="Top 10 Purpose Codes Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10purposecodesxported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_012_top10clearingagentsxported" title="Top 10 Clearing Agents Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10clearingagentsxported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_013_top10portsofentryxported" title="Top 10 Ports of Entry Exported per Customs Value for last 24 Months">
+                                    <ui:include src="/components/read/top10portsofentryxported.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                    </ui:include>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_014_enterprisecompanylinks" title="Enterprise Company Links">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/enterprisecompanylinks.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_016_monthendoutstandingreturns" title="Month End Outstanding Returns and Debt">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/monthendoutstandingreturns.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_017_detailemp201return" title="Detail of Last 12 EMP201 Return">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/detailemp201return.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" id="risk_accordion_tab_018_paymentsandrefunds" title="Payments and Refunds for the last 2 years">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/paymentsandrefunds.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'VDDL'}" title="Public Officer Contact Details" id="vddled_public_officer_tab_2024">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/publicofficercontactdetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>   
+                        </b:tab> 
+                        <b:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" title="Risk Assessment">
+                            <p:accordionPanel dynamic="true">
+                                <p:tab title="Risk Assessment General Information">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/riskassessmentgeninfo.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab  title="Risk Assessment Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/riskassessmentdetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab> 
+                        <b:tab title="Audit Plan">
+                            <p:accordionPanel dynamic="true">
+                                <p:tab title="Audit Plan">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/auditplan.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.caseType eq 'SAR'}" title="Audit Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/auditdetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+                        <b:tab title="Audit Report" ajax="true">
+                            <p:wizard>
+                                <p:tab title="Audit Report">
+                                    <p:accordionPanel id="audit_report_id_2024">
+                                        <p:tab title="Offence and Liabilities" id="audit_offenceandliabilities_2024">
+                                            <o:massAttribute name="readonly" value="true">
+                                                <ui:include src="/components/read/offenceandliabilities.xhtml">
+                                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                                </ui:include>
+                                            </o:massAttribute>
+                                        </p:tab>
+                                        <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.auditPlan.auditReport.wasOffenceDetected eq 'YES'}" title="Offences and Penalties">
+                                            <o:massAttribute name="readonly" value="true">
+                                                <ui:include src="/components/read/penalties.xhtml">
+                                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                                </ui:include>
+                                            </o:massAttribute>
+                                        </p:tab>
+                                        <p:tab rendered="#{suspCaseAuditReportReviewBean.entity.auditPlan.auditReport.thereRevenueLiability eq 'YES'}" title="Revenue Liabilities">
+                                            <o:massAttribute name="readonly" value="true">
+                                                <ui:include src="/components/read/revenueliability.xhtml">
+                                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                                </ui:include>
+                                            </o:massAttribute>
+                                        </p:tab>
+                                        <p:tab title="Total Liability" id="audit_totalliability_2024">
+                                            <o:massAttribute name="readonly" value="true">
+                                                <ui:include src="/components/read/totalliability.xhtml">
+                                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                                </ui:include>
+                                            </o:massAttribute>
+                                        </p:tab>
+                                        <p:tab title="Seizure and Lien" id="audit_seizureandlien_2024">
+                                            <o:massAttribute name="readonly" value="true">
+                                                <ui:include src="/components/read/seizureandlien.xhtml">
+                                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                                </ui:include>
+                                            </o:massAttribute>
+                                        </p:tab>
+                                        <p:tab title="Additional Risk" id="audit_additionalrisk_2024">
+                                            <o:massAttribute name="readonly" value="true">
+                                                <ui:include src="/components/read/additionalrisk.xhtml">
+                                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                                </ui:include>
+                                            </o:massAttribute>
+                                        </p:tab>
+                                    </p:accordionPanel>
+                                </p:tab>
+                                <p:tab title="Letter">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/letter.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:wizard>
+                        </b:tab>
+
+                        <b:tab title="Debt Management" rendered="#{activeUser.userRole.description eq 'CI Auditor'}">
+                            <p:tab title="Audit Report Finalization" id="audit_finalization_2024" rendered="#{suspCaseAuditReportReviewBean.entity.status ne 'DM_CASE_REFERED_TO_CI_FOR_CLOSURE' }">
+                                <ui:include src="/components/add/debtmanagement.xhtml">
+                                    <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                </ui:include>
+                            </p:tab>
+                            <p:tab title="Audit Report Finalization" id="audit_finalised_2024" rendered="#{suspCaseAuditReportReviewBean.entity.status eq 'DM_CASE_REFERED_TO_CI_FOR_CLOSURE' }">
+                                <o:massAttribute name="readonly" value="true">
+                                    <ui:include src="/components/read/debtmanagement.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                    </ui:include>
+                                </o:massAttribute>
+                            </p:tab>
+                            <p:tab title="Debt Collection" id="debt_collection_2024" rendered="#{suspCaseAuditReportReviewBean.entity.status eq 'DM_CASE_REFERED_TO_CI_FOR_CLOSURE' }">
+                                <o:massAttribute name="readonly" value="true">
+                                    <ui:include src="/components/read/collection.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                                    </ui:include>
+                                </o:massAttribute>
+                            </p:tab>
+                        </b:tab>
+                        <b:tab title="Attachments">
+                            <ui:include src="/components/add/attachment.xhtml">
+                                <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                            </ui:include>
+                        </b:tab>
+                        <b:tab title="Comments">
+                            <ui:include src="/components/add/comments.xhtml">
+                                <ui:param name="sharedBean" value="#{suspCaseAuditReportReviewBean}"/>
+                            </ui:include>
+                        </b:tab>
+                    </b:tabView>
+                    <f:facet name="footer">
+                        <b:row rendered="#{activeUser.userRole.description eq 'Senior Auditor'}">
+                            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Accept" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.accept(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Rework" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.rework(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{suspCaseAuditReportReviewBean.cancel(suspCaseAuditReportReviewBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                        <b:row rendered="#{activeUser.userRole.description eq 'CI Auditor'}">
+                            <b:panelGrid colSpans="3,3,3,3" size="lg" styleClass="ui-fluid"> 
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="success" action="#{suspCaseAuditReportReviewBean.save(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton disabled="#{suspCaseAuditReportReviewBean.entity.auditPlan.auditReport.totalLiability.liabilitiesTotal eq 0 and suspCaseAuditReportReviewBean.entity.status eq 'DM_CASE_REFERED_TO_CI_FOR_CLOSURE'}" large-screen="full-width" size="lg" value="Finalise" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.finalise(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton disabled="#{suspCaseAuditReportReviewBean.entity.auditPlan.auditReport.totalLiability.liabilitiesTotal gt 0 and suspCaseAuditReportReviewBean.entity.status ne 'DM_CASE_REFERED_TO_CI_FOR_CLOSURE' }"  large-screen="full-width" size="lg" value="Close" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.close(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{suspCaseAuditReportReviewBean.cancel(suspCaseAuditReportReviewBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                        <b:row rendered="#{activeUser.userRole.description eq 'CI Ops Manager'}">
+                            <b:panelGrid colSpans="3,3,3,3" size="lg" styleClass="ui-fluid">
+                                <b:commandButton disabled="#{suspCaseAuditReportReviewBean.entity.auditPlan.auditReport.totalLiability.liabilitiesTotal lt activeUser.ciOpsManagerApprovalAmount}" large-screen="full-width" size="lg" value="Accept" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.accept(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton disabled="#{suspCaseAuditReportReviewBean.entity.auditPlan.auditReport.totalLiability.liabilitiesTotal ge activeUser.ciOpsManagerApprovalAmount}" large-screen="full-width" size="lg" value="Approve" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.approve(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Rework" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.rework(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{suspCaseAuditReportReviewBean.cancel(suspCaseAuditReportReviewBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                        <b:row rendered="#{activeUser.userRole.description eq 'Group Manager' or activeUser.userRole.description eq 'Senior Manager' or activeUser.userRole.description eq 'Executive'}">
+                            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Approve" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.approve(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Rework" icon-awesome="fa-send" look="success" action="#{suspCaseAuditReportReviewBean.rework(suspCaseAuditReportReviewBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{suspCaseAuditReportReviewBean.cancel(suspCaseAuditReportReviewBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

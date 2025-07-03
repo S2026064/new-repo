@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.top10commoditiesexporteds}" var="xportCommodity" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                <p:column headerText="Tarrif Code">
+                    <h:outputText value="#{xportCommodity.tarrifCode}" rendered="#{xportCommodity.commodityType eq 'EXPORT'}"/>
+                </p:column>
+                <p:column headerText="Section Heading">
+                    <h:outputText value="#{xportCommodity.sectionHead}" rendered="#{xportCommodity.commodityType eq 'EXPORT'}"/>
+                </p:column>
+                <p:column headerText="Lines">
+                    <h:outputText value="#{xportCommodity.lines}" rendered="#{xportCommodity.commodityType eq 'EXPORT'}"/>
+                </p:column>
+                <p:column headerText="Customs value">
+                    <h:outputText value="#{xportCommodity.customsValue}" rendered="#{xportCommodity.commodityType eq 'EXPORT'}"/>
+                </p:column>
+                <p:column headerText="Duty">
+                    <h:outputText value="#{xportCommodity.duty}" rendered="#{xportCommodity.commodityType eq 'EXPORT'}"/>
+                </p:column>
+                <p:column headerText="VAT Due">
+                    <h:outputText value="#{xportCommodity.vatDue}" rendered="#{xportCommodity.commodityType eq 'EXPORT'}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

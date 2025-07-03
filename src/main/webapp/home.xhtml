@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/maintemplate.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsed="false" collapsible="false">
+                    <b:panelGrid col-spans="12" styleClass="ui-fluid">
+                        <p:fieldset legend="Administration">
+                            <b:commandButton value="ADMINISTRATION" disabled="#{not homeBean.activeUser.userRole.adminSetting.administrator}"  action="#{homeBean.routeToAdministration()}" size="lg" large-screen="full-width" icon-size="5x" iconAwesome="fa-users" look="#{homeBean.activeUser.userRole.adminSetting.administrator eq 'true' ? 'success' : 'danger'}"/>
+                        </p:fieldset>
+                        <p:separator/>
+                        <p:fieldset legend="PCA Management">
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:panel>
+                                    <b:commandButton value="VDDL/SARCASE" disabled="#{not homeBean.activeUser.userRole.vddlOrSarCaseSetting.vddlOrSarCase}" action="#{homeBean.routeToVddlOrSarCases()}"  size="lg" large-screen="full-width" icon-size="5x" iconAwesome="fa-database" look="#{homeBean.activeUser.userRole.vddlOrSarCaseSetting.vddlOrSarCase eq 'true' ? 'success' : 'danger'}"/> 
+                                </b:panel>
+                                <b:panel>
+                                    <b:commandButton value="RISK ASSESSMENT" disabled="#{not homeBean.activeUser.userRole.riskManagementSettting.riskAssessment}" action="#{homeBean.routeToRiskAssessment()}"  size="lg" large-screen="full-width" icon-size="5x" iconAwesome="fa-database" look="#{homeBean.activeUser.userRole.riskManagementSettting.riskAssessment eq 'true' ? 'success' : 'danger'}"/> 
+                                </b:panel>
+                                <b:panel>
+                                    <b:commandButton value="AUDITING" disabled="#{not homeBean.activeUser.userRole.auditingSetting.auditing}" action="#{homeBean.routeToAuditing()}"  size="lg" large-screen="full-width" icon-size="5x" iconAwesome="fa-database" look="#{homeBean.activeUser.userRole.auditingSetting.auditing eq 'true' ? 'success' : 'danger'}"/> 
+                                </b:panel>
+                                <b:panel>
+                                    <b:commandButton value="DEBT MANAGEMENT" disabled="#{not homeBean.activeUser.userRole.debtManagementSetting.debtManagement}" action="#{homeBean.routeToDebtManagement()}"  size="lg" large-screen="full-width" icon-size="5x" iconAwesome="fa-database" look="#{homeBean.activeUser.userRole.debtManagementSetting.debtManagement eq 'true' ? 'success' : 'danger'}"/> 
+                                </b:panel>
+                            </b:panelGrid>                           
+                        </p:fieldset>
+                        <p:separator/>
+                        <p:fieldset legend="Reports">
+                            <b:commandButton value="REPORTS" disabled="#{not homeBean.activeUser.userRole.reportSetting.report}" action="#{homeBean.routeToReports()}"  size="lg" large-screen="full-width" icon-size="5x" iconAwesome="fa-folder-open-o" look="#{homeBean.activeUser.userRole.reportSetting.report eq 'true' ? 'success' : 'danger'}"/>
+                        </p:fieldset>
+                    </b:panelGrid>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

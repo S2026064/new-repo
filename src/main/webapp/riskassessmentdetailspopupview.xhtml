@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <o:massAttribute name="disabled" value="true">
+                    <p:panel closable="false" collapsed="false">
+                        <p:fieldset legend="Risk Assessment Details">
+                            <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Description"/>
+                                    <b:inputTextarea required="true" requiredMessage="Enter description" maxlength="4000" value="#{riskAssessmentDetailsBean.entity.description}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                            <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Risk Area"/>
+                                    <p:inputText value="#{riskAssessmentDetailsBean.entity.riskArea.toString()}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="HS chapter the risk applies to:"/>
+                                    <p:inputText value="#{riskAssessmentDetailsBean.entity.hsChapterRisk.description}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Recommendations"/>
+                                    <p:inputText value="#{riskAssessmentDetailsBean.entity.recommendation}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Risk Rating - Likelihood"/>
+                                    <p:inputText value="#{riskAssessmentDetailsBean.entity.riskRatingLikehood.description}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Risk rating - Consequence"/>
+                                    <p:inputText value="#{riskAssessmentDetailsBean.entity.riskRatingConsequence.description}"/>
+                                </b:formGroup>
+                                <b:formGroup id="overallRiskRating">
+                                    <p:outputLabel value="Overall risk rating"/>
+                                    <p:inputText readonly="true" value="#{riskAssessmentDetailsBean.entity.overallRiskRating}"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Revenue at risk"/>
+                                    <b:inputText value="#{riskAssessmentDetailsBean.entity.revenueAtRisk}" fieldSize="lg">
+                                        <f:convertNumber pattern="##,##0.00"/>
+                                        <f:facet name="prepend">
+                                            <b:label  value="R" />
+                                        </f:facet>
+                                    </b:inputText>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value=" Risk Related to SARS Compliance Program or Customs focus Area?"/>
+                                    <p:inputText value="#{riskAssessmentDetailsBean.entity.riskAssessmentRelate.toString()}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                    </p:panel>
+                </o:massAttribute>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>  
+        <p:panel  closable="false" collapsed="false">
+            <ui:repeat value="#{sharedEntity.sarCase.reportedPersons}" var="reportedPerson">
+                <p:panel closable="false" collapsed="false">
+                    <p:fieldset  legend="Personal Details">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="First Name"/>
+                                <p:inputText placeholder="Enter First Name" value="#{reportedPerson.firstName}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Last Name"/>
+                                <p:inputText  placeholder="Enter First Name" value="#{reportedPerson.lastName}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Birth Date"/>
+                                <p:calendar  value="#{reportedPerson.birthDate}" pattern="dd MMM yyyy"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="ID Number"/>
+                                <p:inputText placeholder="Enter ID Number" value="#{reportedPerson.identityNumber}"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <p:spacer height="5px"/>
+                    <p:fieldset  legend="Residential Address">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:inputText placeholder="Line1" value="#{reportedPerson.residentialAddress.line1}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.line2}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.line3}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.line4}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.line5}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.area}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.code}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:inputText placeholder="" value="#{reportedPerson.residentialAddress.province}"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                </p:panel>
+                <p:spacer height="5px"/>
+            </ui:repeat>
+        </p:panel>             
+    </ui:component>
+</html>

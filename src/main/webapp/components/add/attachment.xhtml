@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel collapsed="false" closable="false">
+            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <b:formGroup>
+                            <p:spacer height="5px"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:fieldset legend="Select Document Type">
+                                <p:selectOneMenu value="#{sharedBean.selectedAttachmentType}"  converter="entityConverter">
+                                    <p:ajax event="change" update="fileUploadOutputPanelID"/>
+                                    <f:selectItem itemLabel="Select One" noSelectionOption="true"/>
+                                    <f:selectItems value="#{sharedBean.attachmentTypes}" var="attachType"  itemLabel="#{attachType.toString()}" itemValue="#{attachType}"/>
+                                </p:selectOneMenu>
+                                <p:separator />
+                                <p:outputPanel id="fileUploadOutputPanelID">
+                                    <p:fileUpload update="attachmentTableID" rendered="#{not empty sharedBean.selectedAttachmentType}"  listener="#{sharedBean.handleFileUpload}" label="Upload Document" auto="true"   mode="advanced" dragDropSupport="false"  fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx|xls|xlsx|xlsm|mp4|avi|flv|mkv|wmv|mov)$/i"/>
+                                </p:outputPanel>
+                            </p:fieldset>
+                        </b:formGroup>
+                    </b:panelGrid>  
+                </b:formGroup>
+                <b:formGroup>
+                    <p:dataTable id="attachmentTableID" value="#{sharedBean.entity.attachments}" var="attachment" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <p:column headerText="Code" styleClass="large">
+                            <h:outputText value="#{attachment.code}"/>
+                        </p:column>
+                        <p:column headerText="Description">
+                            <h:outputText value="#{attachment.description}"/>
+                        </p:column>
+                        <p:column headerText="Size" styleClass="medium">
+                            <h:outputText value="#{attachment.documentSize}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="xmedium">
+                            <p:commandButton    styleClass="btn-size-xs" rendered="true" value="Download" actionListener="#{sharedBean.fileDownload(attachment)}"  ajax="false" immediate="true">
+                                <p:fileDownload value="#{sharedBean.downloadFile}"/>
+                            </p:commandButton>
+                            <p:spacer width="2px"/>
+                            <p:commandButton disabled="#{attachment.createdBy ne sharedBean.activeUser.sid}" styleClass="ui-button-raised ui-button-danger btn-size-xs" process="@form" update="@(form :not(.noupdate))" immediate="true" action="#{sharedBean.removeAttachment(attachment)}"  value="Delete"/> 
+                        </p:column>
+                    </p:dataTable>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

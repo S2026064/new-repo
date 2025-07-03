@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable value="#{sharedBean.entity.auditPlan.auditReport.auditReportOffencePenalties}" var="auditReportOffencePenalty" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">                
+                <p:column  headerText="Offence Classification">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.offenceClassification.description}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column  headerText="Section Rule" styleClass="xxxlarge">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.sectionRule.description}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Offence Description">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.offenceDescription.description}"/>
+                </p:column>
+                <p:column headerText="Deposit" styleClass="large">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.offenceDescription.deposit}">
+                        <f:convertNumber currencyCode="ZAR" currencySymbol="R"   pattern="##,##0.00"/> 
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Action" styleClass="medium">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  icon="pencil" value="View" action="#{sharedBean.addOrUpdateOffencePenalty(auditReportOffencePenalty,'penaltiespopupview')}" process="@this"/>
+                </p:column>
+            </p:dataTable>  
+        </p:panel>
+    </ui:component>
+</html>

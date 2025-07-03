@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{letterBean.before}"/>
+        </f:metadata>
+    </f:view>
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <o:massAttribute name="disabled" value="true">
+                    <p:panel closable="false" collapsed="false">
+                        <p:outputPanel id="createLetter" >
+                            <p:fieldset  legend="Letter Head">
+                                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                    <b:formGroup>
+                                        <b:inputText readonly="true" value="#{letterBean.entity.letterHead.toString()}" field-size="lg"/>
+                                    </b:formGroup>
+                                </b:panelGrid>
+                            </p:fieldset>
+                            <p:separator/>
+                            <p:outputPanel id="letterTab" >
+                                <p:fieldset  legend="Details">
+                                    <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                        <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                            <b:formGroup>
+                                                <p:outputLabel value="Name"/>
+                                                <b:inputText readonly="true" value="#{letterBean.entity.user.fullNames}" field-size="lg"/>
+                                            </b:formGroup>
+                                            <b:formGroup>
+                                                <p:outputLabel value="Tel"/>
+                                                <b:inputText readonly="true" value="#{letterBean.entity.user.workTelephoneNumber}" field-size="lg"/>
+                                            </b:formGroup>
+                                            <b:formGroup>
+                                                <p:outputLabel value="Email"/>
+                                                <b:inputText readonly="true" value="#{letterBean.entity.user.emailAddress}" field-size="lg"/>
+                                            </b:formGroup>
+                                        </b:panelGrid>
+                                        <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                            <b:formGroup>
+                                                <p:outputLabel value="Customs Code"/>
+                                                <b:inputText readonly="true" value="#{letterBean.suspiciousCase.ibrData.ibrCustomsNumber}" field-size="lg"/>
+                                            </b:formGroup>
+                                            <b:formGroup>
+                                                <p:outputLabel value="Case Number"/>
+                                                <b:inputText readonly="true" value="#{letterBean.suspiciousCase.caseRefNumber}" field-size="lg"/>
+                                            </b:formGroup>
+                                            <b:formGroup>
+                                                <p:outputLabel value="Issue Date"/>
+                                                <p:datePicker pattern="dd MMM yyyy" value="#{letterBean.entity.issueDate}"/>
+                                            </b:formGroup>
+
+                                            <p:spacer height="5px"/>
+                                        </b:panelGrid>
+                                    </b:panelGrid>
+                                </p:fieldset>
+                                <p:separator/>
+                                <p:fieldset  legend="Client Address Details">
+                                    <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                        <b:formGroup >
+                                            <p:outputLabel value="Client Name"/>
+                                            <b:inputText value="#{letterBean.suspiciousCase.ibrData.registrationName}" required="true" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup >
+                                            <p:outputLabel value="Address line 1"/>
+                                            <b:inputText value="#{letterBean.suspiciousCase.ibrData.postalAddress}" required="true" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Address line 2"/>
+                                            <b:inputText value="#{letterBean.entity.address.line2}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Address line 3"/>
+                                            <b:inputText value="#{letterBean.entity.address.line3}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup>
+                                            <p:outputLabel value="Postal Code"/>
+                                            <b:inputText value="#{letterBean.entity.address.code}" required="true" field-size="lg"/>
+                                        </b:formGroup>
+                                    </b:panelGrid>
+                                </p:fieldset>
+                                <p:separator/>
+                                <p:fieldset  legend="Body of Letter">
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                        <b:formGroup>
+                                            <p:outputLabel value="Salutation"/>
+                                             <b:inputText value="#{letterBean.entity.salutation}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup rendered="#{letterBean.isReqDocLetterDetails  or letterBean.isAuditPlanLetterDetails or letterBean.isSelectedLof}">
+                                            <p:outputLabel value="Trading Name"/>
+                                            <b:inputText value="#{letterBean.suspiciousCase.ibrData.registrationName}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <b:formGroup rendered="#{letterBean.isAuditPlanLetterDetails}">
+                                            <p:outputLabel value="Audit Type"/>
+                                            <b:inputText value="#{letterBean.suspiciousCase.auditPlan.auditType}" field-size="lg"/>
+                                        </b:formGroup>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLod or letterBean.isSelectedIop}">
+                                            <p:spacer width="5"/>
+                                            <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                                <b:formGroup>
+                                                    <p:outputLabel value="Notice of Intent Date"/>
+                                                    <p:datePicker pattern="dd MMM yyyy" value="#{letterBean.entity.noticeOfIntentDate}"/>
+                                                </b:formGroup>
+                                            </b:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLod or letterBean.isSelectedIop}">
+                                            <p:spacer width="5"/>
+                                            <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                                <b:formGroup >
+                                                    <p:outputLabel value="Representation Date"/>
+                                                    <p:datePicker pattern="dd MMM yyyy" value="#{letterBean.entity.representationDate}"/>
+                                                </b:formGroup>
+                                            </b:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedIop}">
+                                            <p:spacer width="5"/>
+                                            <b:formGroup>
+                                                <p:outputLabel value="Pay Fully or Partially"/>
+                                                <b:inputText value="#{letterBean.entity.partiallyPayment}" field-size="lg"/>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedIop}">
+                                            <b:formGroup >
+                                                <ui:repeat  value="#{letterBean.suspiciousCase.auditPlan.auditReport.auditReportOffencePenalties}" var="totala" varStatus="entityVarStatus">
+                                                    <p:outputLabel value="Total A"/>
+                                                    <b:inputText value="#{totala.offencePenalty.subOffenceOrPenaltyAmount}" field-size="lg"/>
+                                                </ui:repeat>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLod}">
+                                            <b:formGroup >
+                                                <ui:repeat  value="#{letterBean.entity.dutyVats}" var="totalaa" varStatus="entityVarStatus">
+                                                    <p:outputLabel value="Total A"/>
+                                                    <b:inputText value="#{totalaa.subAmount}" field-size="lg"/>
+                                                </ui:repeat>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLod}">
+                                            <p:spacer width="5"/>
+                                            <b:formGroup >
+                                                <p:outputLabel value="Additional Explanation"/>
+                                                <b:inputTextarea value="#{letterBean.entity.additionalExplanation}" field-size="lg"/>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedNoi}">
+                                            <p:spacer width="5"/>
+                                            <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                                <b:formGroup >
+                                                    <p:outputLabel value="Notification of Audit Date"/>
+                                                    <p:datePicker pattern="dd MMM yyyy" value="#{letterBean.entity.notificationOfAuditDate}"/>
+                                                </b:formGroup>
+                                            </b:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLof or letterBean.isSelectedNoi}">
+                                            <b:formGroup>
+                                                <p:outputLabel value="Total VAT Due"/>
+                                                <b:inputText value="#{letterBean.suspiciousCase.auditPlan.auditReport.totalLiability.totalVat}" field-size="lg"/>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLof}">
+                                            <b:formGroup>
+                                                <ui:repeat  value="#{letterBean.entity.dutyVats}" var="totalb" varStatus="entityVarStatus">
+                                                    <p:outputLabel value="Total B"/>
+                                                    <b:inputText value="#{totalb.subAmount}" field-size="lg"/><!-- comment -->
+                                                </ui:repeat>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isAuditPlanLetterDetails}">
+                                            <p:spacer width="5"/>
+                                            <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                                <b:formGroup >
+                                                    <p:outputLabel value="Field Date"/>
+                                                    <p:datePicker pattern="dd MMM yyyy" value="#{letterBean.suspiciousCase.auditPlan.startDate}"/>
+                                                </b:formGroup>
+                                            </b:panelGrid>
+                                        </p:outputPanel>
+                                        <p:spacer width="5"/>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedNoi}">
+                                            <b:formGroup>
+                                                <p:outputLabel value="Action or Circumstance of contravention detection"/>
+                                                <p:inputTextarea value="#{letterBean.entity.circumstanceOfContravention}" rows="8" cols="50" maxlength="1000"/>                                            
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isReqDocLetterDetails or letterBean.isAuditPlanLetterDetails or letterBean.isSelectedNoi or letterBean.isSelectedLod or  letterBean.isSelectedLof}">
+                                            <p:spacer width="5"/>
+                                            <b:formGroup>
+                                                <p:outputLabel value="Amount of Days Due"/>
+                                                <b:inputText value="#{letterBean.entity.daysDue}" field-size="lg"/>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedLod}">
+                                            <b:formGroup>
+                                                <p:outputLabel value="Amount Forfeiture"/>
+                                                <b:inputText value="#{letterBean.suspiciousCase.auditPlan.auditReport.revenueLiability.forfieture}" field-size="lg"/>
+                                            </b:formGroup>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{letterBean.isSelectedNoi or letterBean.isSelectedLod}">
+                                            <b:formGroup>
+                                                <p:selectBooleanCheckbox itemLabel="Goods dealt with" value="#{letterBean.entity.goodsDealt}">
+                                                </p:selectBooleanCheckbox>
+                                            </b:formGroup> 
+                                        </p:outputPanel>
+
+                                    </b:panelGrid>
+                                </p:fieldset>
+                                <p:separator/>
+                                <b:panelGrid colSpans="3,9" size="lg" styleClass="ui-fluid">
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                        <p:fieldset rendered="#{letterBean.isAuditPlanLetterDetails}" legend="Programs">
+                                            <p:selectManyCheckbox value="#{letterBean.entity.programs}" layout="responsive" columns="1">
+                                                <f:selectItems value="#{letterBean.programs}" var="program" itemLabel="#{program.description}" itemValue="#{program}"/>
+                                            </p:selectManyCheckbox>
+                                        </p:fieldset>
+                                    </b:panelGrid>
+                                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                        <p:fieldset rendered="#{letterBean.isAuditPlanLetterDetails or letterBean.isReqDocLetterDetails}" legend="Details of Documentation Required">
+                                            <p:selectManyCheckbox  value="#{letterBean.entity.relevantMaterials}" layout="responsive" columns="3">
+                                                <f:selectItems value="#{letterBean.relevantMaterials}" var="relevantMaterial" itemLabel="#{relevantMaterial.description}" itemValue="#{relevantMaterial}"/>
+                                            </p:selectManyCheckbox>
+                                        </p:fieldset>
+                                    </b:panelGrid>
+                                </b:panelGrid>
+                                <b:panelGrid rendered="#{letterBean.isAuditPlanLetterDetails}" colSpans="12" size="lg" styleClass="ui-fluid">
+                                    <p:fieldset legend="Letter Auditors">
+                                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                            <b:formGroup>
+                                                <p:outputPanel id="auditorOutputPanel_ID">
+                                                    <p:dataTable rendered="#{not empty letterBean.entity.auditors}"  value="#{letterBean.entity.auditors}" var="auditor" paginator="true" paginatorAlwaysVisible="false" stripedRows="true" reflow="true" rows="10">
+                                                        <p:column headerText="Auditor Name" styleClass="ui-fluid">
+                                                            <b:inputText  value="#{auditor.name}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </p:outputPanel>
+                                            </b:formGroup>  
+                                        </b:panelGrid>
+                                    </p:fieldset>
+                                </b:panelGrid>
+                                <b:panelGrid rendered="#{letterBean.isAuditPlanLetterDetails or letterBean.isReqDocLetterDetails}" colSpans="12" size="lg" styleClass="ui-fluid">
+                                    <p:fieldset legend="Customs Declaration">
+                                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                            <b:formGroup>
+                                                <p:outputPanel id="declarationOutputPanel_ID">
+                                                    <p:dataTable rendered="#{not empty letterBean.entity.declarations}"  value="#{letterBean.entity.declarations}" var="declaration" paginator="true" paginatorAlwaysVisible="false" stripedRows="true" reflow="true" rows="10">
+                                                        <p:column headerText="Description" styleClass="ui-fluid">
+                                                            <b:inputText  value="#{declaration.description}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </p:outputPanel>
+                                            </b:formGroup>  
+                                        </b:panelGrid>
+                                    </p:fieldset>
+                                </b:panelGrid>
+                                <p:outputPanel rendered="#{letterBean.isReqDocLetterDetails or letterBean.isAuditPlanLetterDetails or letterBean.isSelectedLod  or letterBean.isSelectedLof or letterBean.isSelectedNoi or letterBean.isSelectedIop}">
+                                    <p:outputPanel rendered="#{letterBean.isSelectedLof or letterBean.isSelectedNoi or letterBean.isSelectedIop}">
+                                        <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                            <p:dataTable value="#{letterBean.suspiciousCase.auditPlan.auditReport.auditReportOffencePenalties}"  var="offence" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                                                <f:facet name="header">
+                                                    <f:facet name="right">
+                                                        <p:outputLabel value="Contravention/ Offence Details" styleClass="panel-title-css"/>
+                                                    </f:facet>
+                                                </f:facet>
+                                                <p:column headerText="Section / Rule Contravened">
+                                                    <h:outputText value="#{offence.offencePenalty.sectionRule.description}" />
+                                                </p:column>
+                                                <p:column headerText="Circumstance">
+                                                    <h:outputText value="#{offence.offencePenalty.offenceClassification.description}" />
+                                                </p:column>
+                                                <p:column headerText="Offence">
+                                                    <h:outputText value="#{offence.offencePenalty.offenceDescription.description}" />
+                                                </p:column>
+                                                <p:column headerText="Penalty" rendered="#{letterBean.isSelectedIop}" >
+                                                    <h:outputText value="#{offence.offencePenalty.offenceDescription.deposit}"  />
+                                                </p:column>
+                                                <p:column headerText="Deposit for Possible Penalty" rendered="#{not letterBean.isSelectedLof and not letterBean.isSelectedIop}">
+                                                    <h:outputText value="#{offence.offencePenalty.offenceDescription.deposit}" rendered="#{not letterBean.isSelectedLof and not letterBean.isSelectedIop}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </b:panelGrid>
+                                    </p:outputPanel>
+                                    <p:spacer width="5px"/>
+                                    <p:spacer width="5px"/>
+                                    <p:outputPanel rendered="#{letterBean.isSelectedLof or letterBean.isSelectedNoi or letterBean.isSelectedLod}">
+                                        <b:panelGrid colSpans="12" styleClass="ui-fluid">
+                                            <p:outputPanel id="dutyVatOutputPanel_ID">
+                                                <b:formGroup>
+                                                    <p:dataTable   value="#{letterBean.entity.dutyVats}" var="dutyVat" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                                                        <f:facet name="header">
+                                                            <p:toolbar>
+                                                                <f:facet name="right">
+                                                                    <h:outputLabel value="Duty/VAT" rendered="#{letterBean.isSelectedLof or letterBean.isSelectedNoi}"/>
+                                                                    <h:outputLabel value="Duties and Taxes Underpaid" rendered="#{letterBean.isSelectedLod}"/>
+                                                                </f:facet>
+                                                            </p:toolbar>
+                                                        </f:facet>
+                                                        <p:column headerText="Declaration Number" rendered="#{letterBean.isSelectedLof or letterBean.isSelectedNoi}">
+                                                            <p:inputText value="#{dutyVat.declarationLineNumber}" />
+                                                        </p:column>
+                                                        <p:column headerText="Declaration and Line Number" rendered="#{letterBean.isSelectedLod}">
+                                                            <p:inputText value="#{dutyVat.declarationLineNumber}" />
+                                                        </p:column>
+                                                        <p:column headerText="Line Number" rendered="#{letterBean.isSelectedLof or letterBean.isSelectedNoi}">
+                                                            <p:inputText value="#{dutyVat.lineNumber}" />
+                                                        </p:column>
+                                                        <p:column headerText="Type of Duty or Tax Underpaid">
+                                                            <p:inputText value="#{dutyVat.typeOfDuty}" />
+                                                        </p:column>
+                                                        <p:column headerText="Amount">
+                                                            <p:inputText value="#{dutyVat.amount}" />
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </b:formGroup>
+                                            </p:outputPanel>
+                                        </b:panelGrid>
+                                    </p:outputPanel>
+                                </p:outputPanel>
+                            </p:outputPanel>
+                        </p:outputPanel>
+                    </p:panel>
+                </o:massAttribute>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

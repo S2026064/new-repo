@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable value="#{sharedBean.entity.sarCase.entityTypeDetails}" var="etd" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">                
+                <p:column  headerText="Registered Name">
+                    <h:outputText value="#{etd.registeredName}"/>
+                </p:column>
+                <p:column  headerText="Trading Name">
+                    <h:outputText value="#{etd.tradingName}"/>
+                </p:column>
+                <p:column headerText="Registration Number">
+                    <h:outputText value="#{etd.companyNumber}"/>
+                </p:column>
+                <p:column headerText="Action" styleClass="medium">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  value="View" action="#{sharedBean.addOrUpdateEntityTypeDetails(etd,'entitytypedetailspopupview')}" process="@this"/>
+                </p:column>
+            </p:dataTable>  
+        </p:panel> 
+    </ui:component>
+</html>

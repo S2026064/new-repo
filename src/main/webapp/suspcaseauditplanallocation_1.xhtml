@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{suspCaseAuditPlanAllocationBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Suspicious Activity Report Cases" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable value="#{suspCaseAuditPlanAllocationBean.suspiciousCases}" var="susp" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <f:facet name="header">
+                            <b:row>
+                                <b:commandButton large-screen="full-width" size="lg" iconSize="lg" iconAwesome="fa-plus" look="primary" value="Add Next SarCase" action="#{suspCaseAuditPlanAllocationBean.nextSuspCase()}" update="@form"/>
+                            </b:row>
+                        </f:facet>
+                        <p:column  headerText="Date">
+                            <h:outputText value="#{susp.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{susp.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Case Ref Number">
+                            <h:outputText value="#{susp.caseRefNumber}"/>
+                        </p:column>
+                        <p:column headerText="Type">
+                            <h:outputText value="#{susp.caseType.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{susp.status.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="xmedium">
+                            <b:commandButton  look="primary" size="md" value="Allocate" icon-size="md" iconBrand="5.2.0" action="#{suspCaseAuditPlanAllocationBean.viewSuspCase(susp)}" process="@form" update="@form"/>
+                        </p:column>
+                    </p:dataTable> 
+                </b:panel>
+
+                <b:panel collapsible="false" rendered="#{suspCaseAuditPlanAllocationBean.add}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'?'Suspicious Activity Report Case':'Voluntary Disclosure or Demand Led Case'}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:tabView>
+                        <b:tab title="Details">
+                            <p:accordionPanel  dynamic="true" cache="true">
+                                <p:tab title="Capturer's Particulars">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/capturerparticulars.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"   title="Non Compliance Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/noncompliancedetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"   title="Person Reporting Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/reportingpersondetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'VDDL'}" title="Customs Excise Client Type">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/customsexciseclienttype.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'VDDL'}" title="Voluntary Disclosure or Deman Led Type">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/voluntarydisclosuredemandled.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'VDDL'}" title="Instructions / Reason for Audit /Request">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <p:panel>
+                                            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                                <b:formGroup>
+                                                    <p:fieldset legend="Instructions">
+                                                        <b:inputTextarea value="#{suspCaseAuditPlanAllocationBean.entity.vddLed.instruction}"/>
+                                                    </p:fieldset>
+                                                </b:formGroup>
+                                            </b:panelGrid>
+                                        </p:panel>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+
+                        <b:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}" title="Risk Assessment">
+                            <p:accordionPanel dynamic="true" cache="true">
+                                <p:tab  title="Risk Assessment General Information">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/riskassessmentgeninfo.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab  title="Risk Assessment Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/riskassessmentdetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+
+                        <b:tab title="IBR Data">
+                            <p:accordionPanel  dynamic="true" cache="true">
+                                <p:ajax event="tabChange" listener="#{suspCaseAuditPlanAllocationBean.onTabChange}"  process="@this"/>
+                                <p:tab id="risk_accordion_tab_002_registparticularsperibr" title="Registration Particulars as per IBR">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/registparticularsperibr.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"   id="risk_accordion_tab_003_customsregistparticulars"  title="Customs Registration Particulars">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/customsregistparticulars.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_004_directordetails" title="Director Details">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/directordetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_005_customsturnover" title="Customs Turnover">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/customsturnover.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_006_top10commoditiesimported" title="Top 10 Commodities Imported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10commoditiesimported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include> 
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_007_top10commoditiesexported" title="Top 10 Commodities Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10commoditiesexported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_008_topcommoditieswharehouse" title="Top 10 Commodities Wharehouse per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/topcommoditieswharehouse.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_009_top10transitcommodities" title="Top 10 Transit Commodities per Customs Value for last 24 Months">
+                                    <ui:include src="/components/read/top10transitcommodities.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                    </ui:include>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_010_top10countriesoforigin" title="Top 10 Countries of Origin Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10countriesoforigin.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_011_top10purposecodesxported" title="Top 10 Purpose Codes Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10purposecodesxported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_012_top10clearingagentsxported" title="Top 10 Clearing Agents Exported per Customs Value for last 24 Months">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/top10clearingagentsxported.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_013_top10portsofentryxported" title="Top 10 Ports of Entry Exported per Customs Value for last 24 Months">
+                                    <ui:include src="/components/read/top10portsofentryxported.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                    </ui:include>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_014_enterprisecompanylinks" title="Enterprise Company Links">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/enterprisecompanylinks.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_016_monthendoutstandingreturns" title="Month End Outstanding Returns and Debt">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/monthendoutstandingreturns.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_017_detailemp201return" title="Detail of Last 12 EMP201 Return">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/detailemp201return.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'SAR'}"  id="risk_accordion_tab_018_paymentsandrefunds" title="Payments and Refunds for the last 2 years">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/paymentsandrefunds.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab rendered="#{suspCaseAuditPlanAllocationBean.entity.caseType eq 'VDDL'}" title="Public Officer Contact Details" id="vddled_public_officer_tab_2024">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/publicofficercontactdetails.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+                        <b:tab title="Attachments">
+                            <ui:include src="/components/add/attachment.xhtml">
+                                <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                            </ui:include>
+                        </b:tab> 
+                        <b:tab title="Comments">
+                            <ui:include src="/components/add/comments.xhtml">
+                                <ui:param name="sharedBean" value="#{suspCaseAuditPlanAllocationBean}"/>
+                            </ui:include>
+                        </b:tab> 
+                    </b:tabView>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Allocate" icon="check" look="success" action="#{suspCaseAuditPlanAllocationBean.allocate(suspCaseAuditPlanAllocationBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Transfer" immediate="true" icon="check" look="success" action="#{suspCaseAuditPlanAllocationBean.transfer(suspCaseAuditPlanAllocationBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{suspCaseAuditPlanAllocationBean.cancel(suspCaseAuditPlanAllocationBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+
+                <b:panel collapsible="false" rendered="#{suspCaseAuditPlanAllocationBean.allocate}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="Allocate Suspicious Case" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <p:fieldset legend="Allocate Case to CI Auditor">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:selectOneMenu value="#{suspCaseAuditPlanAllocationBean.allocatedUser}" required="true" requiredMessage="Select the person user to which the SAR Case should be assigned."  converter="entityConverter">
+                                    <f:selectItem  itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{suspCaseAuditPlanAllocationBean.auditors}" var="auditor" itemLabel="[#{auditor.fullNames}] - [#{auditor.sid}] - [#{auditor.userRole.description}]" itemValue="#{auditor}"/>
+                                </p:selectOneMenu>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Submit" icon="check" look="success" action="#{suspCaseAuditPlanAllocationBean.submit(suspCaseAuditPlanAllocationBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{suspCaseAuditPlanAllocationBean.cancel(suspCaseAuditPlanAllocationBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+                <b:panel collapsible="false" rendered="#{suspCaseAuditPlanAllocationBean.transfer}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="Transfer Suspicious Case" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <p:fieldset legend="Select Transfer Office">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:selectOneMenu value="#{suspCaseAuditPlanAllocationBean.entity.ciLocationOffice}" required="true" requiredMessage="Select the person user to which the SAR Case should be assigned."  converter="entityConverter">
+                                    <f:selectItem  itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{suspCaseAuditPlanAllocationBean.ciOffices}" var="office" itemLabel="[#{office.area}]" itemValue="#{office}"/>
+                                </p:selectOneMenu>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Submit" icon="check" look="success" action="#{suspCaseAuditPlanAllocationBean.submit(suspCaseAuditPlanAllocationBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{suspCaseAuditPlanAllocationBean.cancel(suspCaseAuditPlanAllocationBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:fieldset  legend="SAR Case Discard Comments">
+            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <b:row>
+                        <b:commandButton  icon-size="lg" iconAwesome="fa-plus" process="@this" update="commentsOutputPanel_ID" action="#{sharedBean.addComment(sharedBean.entity)}" large-screen="full-width" look="primary" value="Add" size="lg"/>
+                    </b:row>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputPanel id="commentsOutputPanel_ID">
+                        <p:dataTable rendered="#{not empty sharedBean.entity.comments}"  value="#{sharedBean.entity.comments}" var="comment" paginator="true" paginatorAlwaysVisible="false" stripedRows="true" reflow="true" rows="10">
+                            <p:column headerText="Date" styleClass="large">
+                                <h:outputText value="#{comment.createdDate}">
+                                    <f:convertDateTime pattern="dd MMM yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="SID" styleClass="large">
+                                <h:outputText value="#{comment.createdBy}"/>
+                            </p:column>
+                            <p:column headerText="Description" styleClass="ui-fluid">
+                                <h:outputText rendered="#{not comment.render}" value="#{comment.description}"/>
+                                <b:inputTextarea   rendered="#{comment.render}" value="#{comment.description}" rows="4"/>
+                            </p:column>
+                            <p:column headerText="Action" styleClass="xmedium">
+                                <p:spacer width="5px"/>
+                                <p:commandButton disabled="#{comment.createdBy ne sharedBean.activeUser.sid}" styleClass="ui-button-raised ui-button-primary btn-size-sm" process="@(.ui-datatable)" update="@(.ui-datatable)" action="#{sharedBean.updateComment(comment)}"  value="Edit"/> 
+                                <p:spacer width="5px"/>
+                                <p:commandButton disabled="#{comment.createdBy ne sharedBean.activeUser.sid}" styleClass="ui-button-raised ui-button-danger btn-size-sm" process="@form" update="@form" immediate="true" action="#{sharedBean.removeComment(comment)}"  value="Delete"/> 
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+                </b:formGroup>  
+            </b:panelGrid>
+        </p:fieldset>
+    </ui:component>
+</html>

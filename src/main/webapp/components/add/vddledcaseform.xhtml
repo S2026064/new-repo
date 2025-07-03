@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"  
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:accordionPanel  widgetVar="basic">
+            <p:ajax event="tabChange" listener="#{sharedFormBean.onTabChange}"  process="@this"/>
+            <p:tab  title="Case Details">
+                <p:panel>
+                    <o:massAttribute name="readonly" value="true">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Case Ref Number"/>
+                                <b:inputText value="#{sharedFormBean.entity.caseRefNumber}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Case Status "/>
+                                <b:inputText value="#{sharedFormBean.entity.status.toString()}" field-size="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </o:massAttribute>
+                </p:panel>
+            </p:tab>
+            <p:tab title="Capturer's Particulars">
+                <o:massAttribute name="readonly" value="true">
+                    <ui:include src="/components/read/capturerparticulars.xhtml">
+                        <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                    </ui:include>
+                </o:massAttribute>
+            </p:tab>
+            <p:tab title="Registration Particulars as per IBR">
+                <o:massAttribute name="readonly" value="true">
+                    <ui:include src="/components/read/registparticularsperibr.xhtml">
+                        <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                    </ui:include>
+                </o:massAttribute>
+            </p:tab> 
+            <p:tab title="Public Officer Contact Details" id="vddled_public_officer_tab_2024">
+                <o:massAttribute name="readonly" value="true">
+                    <ui:include src="/components/read/publicofficercontactdetails.xhtml">
+                        <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                    </ui:include>
+                </o:massAttribute>
+            </p:tab>
+            <p:tab title="Customs Excise Client Type">
+                <ui:include src="/components/add/customsexciseclienttype.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>
+            </p:tab>
+            <p:tab title="Voluntary Disclosure or Deman Led Type">
+                <ui:include src="/components/add/voluntarydisclosuredemandled.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>
+            </p:tab>
+            <p:tab title="Instructions / Reason for Audit /Request">
+                <p:panel>
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <b:formGroup>
+                            <p:fieldset legend="Instructions">
+                                <b:inputTextarea required="true" requiredMessage="Enter instructions" value="#{sharedFormBean.entity.vddLed.instruction}"/>
+                            </p:fieldset>
+                        </b:formGroup>
+                    </b:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab title="Office Allocation">
+                <ui:include src="/components/add/officeallocation.xhtml">
+                    <ui:param name="sharedBean" value="#{sharedFormBean}"/>
+                </ui:include>
+            </p:tab>
+        </p:accordionPanel>
+    </ui:component>
+</html>

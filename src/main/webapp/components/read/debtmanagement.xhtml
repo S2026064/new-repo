@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:fieldset legend="CI Auditor Details – LOI Issued">
+                <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:selectBooleanCheckbox required="true" requiredMessage="please select LOI Issued" itemLabel="LOI Issued" value="#{sharedBean.entity.auditPlan.auditReport.loiIssued}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value=""/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:selectBooleanCheckbox itemLabel="Do you want to extend due date" value="#{sharedBean.entity.auditPlan.auditReport.extendDueDate}"/>
+                    </b:formGroup>
+                </b:panelGrid>
+                <p:spacer width="5px"/>
+                <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Due Date"/>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.loiDate}">
+                            <f:convertDateTime pattern="dd MMM yyyy"/>
+                        </p:inputText>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Extension Reason"/>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.loiExtentionReason.toString()}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Extend Due Date " />
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.dueDateExtend}">
+                            <f:convertDateTime pattern="dd MMM yyyy"/>
+                        </p:inputText>
+                    </b:formGroup>
+                </b:panelGrid>
+                <p:spacer width="5px" />
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Reason"/>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.extendReason}" placeholder="please type the reason"  fieldSize="lg" />
+                    </b:formGroup>
+                </b:panelGrid>
+            </p:fieldset>
+            <p:spacer width="5px"/>
+            <p:fieldset legend="CI Auditor Details – LOD Issued"> 
+                <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value=" "/>
+                        <p:selectBooleanCheckbox itemLabel="LOD Issued" value="#{sharedBean.entity.auditPlan.auditReport.lodIssued}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Due Date"/>
+                         <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.lodDate}">
+                            <f:convertDateTime pattern="dd MMM yyyy"/>
+                        </p:inputText>
+                    </b:formGroup>
+                </b:panelGrid>
+            </p:fieldset>
+            <p:spacer width="5px"/>
+            <p:fieldset legend="CI Auditor Payment Details">
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel  value="Payment Type"/>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.paymentType.toString()}"/>
+                    </b:formGroup>
+                </b:panelGrid>
+                <p:spacer width="5px"/>
+                <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Total Liability"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputText  value="#{sharedBean.entity.auditPlan.auditReport.totalLiability.liabilitiesTotal}" field-size="lg">
+                            <f:convertNumber currencyCode="ZAR" currencySymbol="R" pattern="##,##0.00"/>
+                            <f:facet name="prepend">
+                                <b:label value="R" />
+                            </f:facet>
+                        </b:inputText>
+                    </b:formGroup> 
+                </b:panelGrid>
+                <p:outputPanel>
+                    <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Amount Outstanding"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.outstandingAmount}" fieldSize="lg">
+                                <f:convertNumber currencyCode="ZAR" currencySymbol="R" pattern="##,##0.00"/>
+                                <f:facet name="prepend">
+                                    <b:label value="R" />
+                                </f:facet>
+                            </b:inputText>
+                        </b:formGroup> 
+                    </b:panelGrid>
+                    <b:panelGrid  colSpans="6,6" size="lg" style-class="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Amount Paid"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.payedAmount}"  fieldSize="lg">
+                                <f:convertNumber currencyCode="ZAR" currencySymbol="R" pattern="##,##0.00"/>
+                                <f:facet name="prepend">
+                                    <b:label value="R" />
+                                </f:facet>
+                            </b:inputText>
+                        </b:formGroup> 
+                    </b:panelGrid>
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <b:formGroup>
+                            <p:selectBooleanCheckbox itemLabel="Proof of Payment attached" value="#{sharedBean.entity.auditPlan.auditReport.auditorProofOfPayment}"/>
+                        </b:formGroup>
+                    </b:panelGrid>
+                </p:outputPanel>
+            </p:fieldset>
+        </p:panel>
+    </ui:component>
+</html>

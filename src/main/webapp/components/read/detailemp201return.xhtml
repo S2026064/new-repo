@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.detailemp201returns}" var="emp201Return" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="20">
+                <p:column headerText="PAYE Nbr">
+                    <h:outputText value="#{emp201Return.payeNumber}"/>
+                </p:column>
+                <p:column headerText="Period">
+                    <h:outputText value="#{emp201Return.period}"/>
+                </p:column>
+                <p:column headerText="Amt PAYE">
+                    <h:outputText value="#{emp201Return.amountPaye}"/>
+                </p:column>
+                <p:column headerText="Amt SDL">
+                    <h:outputText value="#{emp201Return.amountSdl}"/>
+                </p:column>
+                <p:column headerText="Amt UIF">
+                    <h:outputText value="#{emp201Return.amountUif}"/>
+                </p:column>
+                <p:column headerText="Total">
+                    <h:outputText value="#{emp201Return.total}"/>
+                </p:column>
+                <p:column headerText="Date Declared">
+                    <h:outputText value="#{emp201Return.dateDeclared}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Interest">
+                    <h:outputText value="#{emp201Return.interest}"/>
+                </p:column>
+                <p:column headerText="Penalty">
+                    <h:outputText value="#{emp201Return.penalty}"/>
+                </p:column>
+                <p:column headerText="Prev Total Payment">
+                    <h:outputText value="#{emp201Return.prevTotalPayment}"/>
+                </p:column>
+                <p:column headerText="Date Recieved">
+                    <h:outputText value="#{emp201Return.dateRecieved}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

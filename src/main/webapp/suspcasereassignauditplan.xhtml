@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{suspCaseRiskCompletedBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Suspicious Activity Report Cases" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>   
+                    <p:dataTable value="#{suspCaseRiskCompletedBean.suspiciousCases}" var="susp" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <p:column  headerText="Date">
+                            <h:outputText value="#{susp.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{susp.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Case Ref Number">
+                            <h:outputText value="#{susp.caseRefNumber}"/>
+                        </p:column>
+                        <p:column headerText="Type">
+                            <h:outputText value="#{susp.caseType.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{susp.status.toString()}"/>
+                        </p:column>
+                    </p:dataTable>                              
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

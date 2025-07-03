@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component> 
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable value="#{sharedBean.entity.sarCase.reportedPersons}" var="reportedPerson" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">                
+                <f:facet name="header">                          
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton styleClass="ui-button-primary btn-size-lg" style="width:30rem"  icon="plus" value="New" action="#{sharedBean.addOrUpdateReportedPerson(null,'reportedpersondetailspopup')}" process="@this" update="@namingcontainer" >
+                                <p:ajax event="dialogReturn" listener="#{sharedBean.handleAddReportedPersonReturnListener}" update="@namingcontainer" />
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+                <p:column  headerText="First Name">
+                    <h:outputText value="#{reportedPerson.firstName}"/>                      
+                </p:column>
+                <p:column  headerText="Last Name">
+                    <h:outputText value="#{reportedPerson.lastName}"/>
+                </p:column>
+                <p:column  headerText="Birth Date">
+                    <h:outputText value="#{reportedPerson.birthDate}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="ID Number">
+                    <h:outputText value="#{reportedPerson.identityNumber}"/>
+                </p:column>
+                <p:column headerText="Action" styleClass="large">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  icon="pencil" value="Edit" action="#{sharedBean.addOrUpdateReportedPerson(reportedPerson,'reportedpersondetailspopup')}" process="@this" update="@namingcontainer">
+                        <p:ajax event="dialogReturn" listener="#{sharedBean.handleUpdateReportedPersonReturnListener}" update="@namingcontainer" />
+                    </p:commandButton>
+                    <p:spacer width="5px"/>
+                    <p:commandButton styleClass="ui-button-danger btn-size-sm" value="Delete" icon="remove" action="#{sharedBean.removeReportedPerson(reportedPerson)}" update="@namingcontainer"/>
+                </p:column>
+            </p:dataTable>  
+        </p:panel> 
+    </ui:component>
+</html>

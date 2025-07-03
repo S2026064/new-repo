@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" look="default" rendered="#{suspCaseCollectionBean.list}">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Suspicious Activity Report Cases" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>   
+                    <p:dataTable value="#{suspCaseCollectionBean.suspiciousCases}" var="susp" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                        <f:facet name="header">
+                            <b:row>
+                                <b:commandButton large-screen="full-width" size="lg" iconSize="lg" iconAwesome="fa-plus" look="primary" value="Add Next SarCase" action="#{suspCaseCollectionBean.nextSarCase()}" update="@form"/>
+                            </b:row>
+                        </f:facet>
+                        <p:column  headerText="Date">
+                            <h:outputText value="#{susp.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Customs Code">
+                            <h:outputText value="#{susp.ibrData.customsCode}"/>
+                        </p:column>
+                        <p:column headerText="Case Ref Number">
+                            <h:outputText value="#{susp.caseRefNumber}"/>
+                        </p:column>
+                        <p:column headerText="Type">
+                            <h:outputText value="#{susp.caseType.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{susp.status.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton  look="primary" size="md" value="Review" icon-size="md" iconBrand="5.2.0" iconAwesome="fa-list"  action="#{suspCaseCollectionBean.viewSuspCase(susp)}" process="@form" update="@form"/>
+                        </p:column>
+                    </p:dataTable>                              
+                </b:panel>
+                <b:panel collapsible="false" rendered="#{suspCaseCollectionBean.add}">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{suspCaseCollectionBean.entity.caseType eq 'SAR'?'Suspicious Activity Report Case':'Voluntary Disclosure or Demand Led Case'}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:tabView>
+                        <b:tab title="Case Details" ajax="true">
+                            <p:accordionPanel  dynamic="true">
+                                <p:tab title="Capturer's Particulars">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/capturerparticulars.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseCollectionBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+                        <b:tab title="Debt Management">
+                            <p:accordionPanel id="audit_report_id_2024">
+                                <p:tab title="Audit Report Finalization" id="audit_finalised_2024">
+                                    <o:massAttribute name="readonly" value="true">
+                                        <ui:include src="/components/read/debtmanagement.xhtml">
+                                            <ui:param name="sharedBean" value="#{suspCaseCollectionBean}"/>
+                                        </ui:include>
+                                    </o:massAttribute>
+                                </p:tab>
+                                <p:tab title="Debt Collection" id="debt_collection_2024" rendered="#{activeUser.userRole.description eq 'Management'}">
+                                    <ui:include src="/components/add/collection.xhtml">
+                                        <ui:param name="sharedBean" value="#{suspCaseCollectionBean}"/>
+                                    </ui:include>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </b:tab>
+                        <b:tab title="Attachments">
+                            <ui:include src="/components/add/attachment.xhtml">
+                                <ui:param name="sharedBean" value="#{suspCaseCollectionBean}"/>
+                            </ui:include>
+                        </b:tab>
+                        <b:tab title="Comments">
+                            <ui:include src="/components/add/comments.xhtml">
+                                <ui:param name="sharedBean" value="#{suspCaseCollectionBean}"/>
+                            </ui:include>
+                        </b:tab>
+                    </b:tabView>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Closure" icon-awesome="fa-send" look="success" action="#{suspCaseCollectionBean.submit(suspCaseCollectionBean.entity)}" process="@form" update="@form"/>
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{suspCaseCollectionBean.cancel(suspCaseCollectionBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

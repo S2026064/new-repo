@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <o:massAttribute name="disabled" value="true">
+                    <p:panel closable="false" collapsed="false">
+                        <b:panelGrid  colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Offence Classification"/>
+                                <p:inputText value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceClassification.description}"/>
+                            </b:formGroup> 
+                            <b:formGroup>
+                                <p:outputLabel value="Section Rule"/>
+                                <p:inputText value="#{addOrUpdatePenaltyBean.entity.offencePenalty.sectionRule.description}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Offence Description"/>
+                                <p:inputText value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.description}"/>                               
+                            </b:formGroup> 
+                        </b:panelGrid>
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Deposit"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.deposit}" fieldSize="lg">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <h:outputText  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Notes"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.notes}" fieldSize="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Section Amount"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.sectionAmount}" fieldSize="lg">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <h:outputText  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Notes Amount"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.notesAmount}" fieldSize="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Penalty Amount"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.subOffenceOrPenaltyAmount}" fieldSize="lg">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <h:outputText  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:panel>
+                </o:massAttribute>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

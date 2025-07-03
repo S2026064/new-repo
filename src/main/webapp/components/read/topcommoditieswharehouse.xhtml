@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.topcommoditieswharehouses}" var="warehouseCommodity" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                <p:column headerText="Tarrif Code">
+                    <h:outputText value="#{warehouseCommodity.tarrifCode}" rendered="#{warehouseCommodity.commodityType eq 'WAREHOUSE'}"/>
+                </p:column>
+                <p:column headerText="Section Heading">
+                    <h:outputText value="#{warehouseCommodity.sectionHead}" rendered="#{warehouseCommodity.commodityType eq 'WAREHOUSE'}"/>
+                </p:column>
+                <p:column headerText="Lines">
+                    <h:outputText value="#{warehouseCommodity.lines}" rendered="#{warehouseCommodity.commodityType eq 'WAREHOUSE'}"/>
+                </p:column>
+                <p:column headerText="Customs value">
+                    <h:outputText value="#{warehouseCommodity.customsValue}" rendered="#{warehouseCommodity.commodityType eq 'WAREHOUSE'}"/>
+                </p:column>
+                <p:column headerText="Duty">
+                    <h:outputText value="#{warehouseCommodity.duty}" rendered="#{warehouseCommodity.commodityType eq 'WAREHOUSE'}"/>
+                </p:column>
+                <p:column headerText="VAT Due">
+                    <h:outputText value="#{warehouseCommodity.vatDue}" rendered="#{warehouseCommodity.commodityType eq 'WAREHOUSE'}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>
+
+
+

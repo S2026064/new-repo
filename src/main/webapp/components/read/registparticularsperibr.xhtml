@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="IBR Custom Nbr"/>
+                    <p:inputText value="#{sharedBean.entity.ibrData.ibrCustomsNumber}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Customs Code"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.customsCode}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Registration Name"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.registrationName}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Trading Namr"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.tradingName}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Nature of Business Income Tax"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.natureOfBusinessIncomeTax}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Nature of Business Customs"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.natureOfBusinessCustoms}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Postal Address"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.postalAddress}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Physical Address"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.physicalAddress}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Telephone Nbr (Work : Mobile : Home)"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.workTelephoneNumber!=null ? [ sharedBean.entity.ibrData.workTelephoneNumber ]:''}  #{sharedBean.entity.ibrData.mobileNumber!=null ? [ sharedBean.entity.ibrData.mobileNumber ]:''}  #{sharedBean.entity.ibrData.homeTelephoneNumber!=null ? [ sharedBean.entity.ibrData.homeTelephoneNumber ]:''}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Fax Nbr"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.faxNumber}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Email Address"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.emailAddress}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Website"/>
+                    <p:inputText value="#{sharedBean.entity.ibrData.webAddress}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Auditor (CIPC)"/>
+                    <p:inputText value="#{sharedBean.entity.ibrData.auditorsCipc}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Attorneys"/>
+                    <p:inputText value="#{sharedBean.entity.ibrData.attorneys}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Restricted Taxpayer"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.restrictedTaxPayer}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Company Nbr"/>
+                    <p:inputText value="#{sharedBean.entity.ibrData.companyNumber}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Income Tax Nbr"/>
+                    <p:inputText  value="#{sharedBean.entity.ibrData.incomeTaxNumber}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="VAT Nbr"/>
+                    <p:inputText value="#{sharedBean.entity.ibrData.vatNumber}"/>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

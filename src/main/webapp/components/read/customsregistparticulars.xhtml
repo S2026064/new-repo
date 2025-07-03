@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.customsRegistrationParticularses}" var="custregistpartic" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="20">
+                <p:column headerText="Registration Type">
+                    <h:outputText value="#{custregistpartic.registrationType}"/>
+                </p:column>
+                <p:column headerText="Address">
+                    <h:outputText value="#{custregistpartic.address}"/>
+                </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{custregistpartic.status}"/>
+                </p:column>
+                <p:column headerText="Date Active/In-Active">
+                    <h:outputText value="#{custregistpartic.activationDate}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <p:panel closable="false" collapsed="false">
+                    <f:facet name="header">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:outputLabel value="Add/Update Offence and Penalty"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>  
+                    <b:panelGrid  colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Offence Classification"/>
+                            <p:selectOneMenu styleClass="noupdate" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceClassification}"  converter="entityConverter">
+                                <p:ajax event="itemSelect" listener="#{addOrUpdatePenaltyBean.onOffenceClassificationChange}" update="sectionRule_select_id_2024"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{addOrUpdatePenaltyBean.offenceClassifications}" var="classif" itemLabel="#{classif.description}" itemValue="#{classif}"/>
+                            </p:selectOneMenu> 
+                        </b:formGroup> 
+                        <p:outputPanel id="sectionRule_select_id_2024">
+                            <b:formGroup>
+                                <p:outputLabel value="Section Rule"/>
+                                <p:selectOneMenu  styleClass="noupdate" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.sectionRule}" converter="entityConverter">
+                                    <p:ajax event="itemSelect" listener="#{addOrUpdatePenaltyBean.onSectionRuleChange}" update="offenceDescription_select_id_2024"/>
+                                    <f:selectItem itemLabel="Select One"  noSelectionOption="true" />
+                                    <f:selectItems  value="#{addOrUpdatePenaltyBean.sectionRules}" var="sect" itemLabel="#{sect.description}" itemValue="#{sect}"/>
+                                </p:selectOneMenu> 
+                            </b:formGroup>
+                        </p:outputPanel>
+                        <p:outputPanel id="offenceDescription_select_id_2024">
+                            <b:formGroup>
+                                <p:outputLabel value="Offence Description"/>
+                                <p:selectOneMenu  styleClass="noupdate"  value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription}" converter="entityConverter">
+                                    <p:ajax event="itemSelect" update="offenceDescription_outputpanel_id_2024"/>
+                                    <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{addOrUpdatePenaltyBean.offenceDescriptions}" var="offenceDescrip" itemLabel="#{offenceDescrip.description}" itemValue="#{offenceDescrip}"/>
+                                </p:selectOneMenu> 
+                            </b:formGroup> 
+                        </p:outputPanel>
+                    </b:panelGrid>
+                    <p:outputPanel id="offenceDescription_outputpanel_id_2024">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Deposit"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.deposit}" fieldSize="lg">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <b:label  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Notes"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.notes}" fieldSize="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Section Amount"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.sectionAmount}" fieldSize="lg">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <b:label  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Notes Amount"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.offenceDescription.notesAmount}" fieldSize="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Penalty Amount"/>
+                                <b:inputText readonly="true" value="#{addOrUpdatePenaltyBean.entity.offencePenalty.subOffenceOrPenaltyAmount}" fieldSize="lg">
+                                    <f:convertNumber pattern="#0.00"/>
+                                    <f:facet name="prepend">
+                                        <b:label  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <b:commandButton look="success" value="Add"  size="md" large-screen="full-width" icon="check" immediate="true"  update="@form" action="#{addOrUpdatePenaltyBean.selectOffencePenaltyFromDialog(addOrUpdatePenaltyBean.entity)}"/>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <b:commandButton look="danger" value="Cancel"  size="md" large-screen="full-width" icon="remove" immediate="true"  update="@form" action="#{addOrUpdatePenaltyBean.cancelOffencePenaltyFromDialog()}"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>   
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

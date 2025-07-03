@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" collapsed="false" look="default">
+                    <p:steps >
+                        <p:menuitem value="Create" />
+                        <p:menuitem value="Review"/>
+                        <p:menuitem value="Allocate"/>
+                        <p:menuitem value="Reverse/Re-assign"/>
+                    </p:steps>
+                </b:panel>
+                <b:panel collapsible="false" collapsed="false" look="default">
+
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

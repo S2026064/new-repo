@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel rendered="#{offenceDescriptionBean.list}" look="default"  collapsible="false">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="Section Rules" styleClass="panel-title-css"/>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable globalFilterOnly="true" widgetVar="offenceDescriptionTable" value="#{offenceDescriptionBean.offenceDescriptions}" var="offenceDescrip" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="15">
+                        <f:facet name="header">                          
+                            <p:toolbar>
+                                <p:toolbarGroup>
+                                    <b:commandButton style="width:30rem" large-screen="full-width" iconSize="md" size="lg" icon="plus" look="primary" value="New" disabled="#{not offenceDescriptionBean.activeUser.userRole.permission.add}" action="#{offenceDescriptionBean.addOrUpdate(null)}" update="@form"/>
+                                </p:toolbarGroup>
+                                <p:toolbarGroup align="right">
+                                    <p:inputText placeholder="Filter by all fields" id="globalFilter" style="width:30rem" onkeyup="PF('offenceDescriptionTable').filter()"/>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                        </f:facet>
+                        <p:column headerText="No." styleClass="small">
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="Date" filterBy="#{offenceDescrip.createdDate}">
+                            <h:outputText value="#{offenceDescrip.createdDate}">
+                                <f:convertDateTime pattern="dd MMM yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Description" filterBy="#{offenceDescrip.description}">
+                            <h:outputText value="#{offenceDescrip.description}"/>
+                        </p:column>
+                        <p:column headerText="Offence Classification"  filterBy="#{offenceDescrip.sectionRule.description}">
+                            <h:outputText value="#{offenceDescrip.sectionRule.description}"/>
+                        </p:column>
+                        <p:column headerText="Notes" filterBy="#{offenceDescrip.notes}" >
+                            <h:outputText value="#{offenceDescrip.notes}"/>
+                        </p:column>
+                        <p:column headerText="Notes Amount" filterBy="#{offenceDescrip.notesAmount}">
+                            <h:outputText value="#{offenceDescrip.notesAmount}"/>
+                        </p:column>
+                        <p:column headerText="Deposit" filterBy="#{offenceDescrip.deposit}">
+                            <h:outputText value="#{offenceDescrip.deposit}">
+                                <f:convertNumber pattern="##,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Section Amount" filterBy="#{offenceDescrip.sectionAmount}">
+                            <h:outputText value="#{offenceDescrip.sectionAmount}">
+                                <f:convertNumber pattern="##,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="large">
+                            <b:commandButton disabled="#{not offenceDescriptionBean.activeUser.userRole.permission.update}" look="primary" size="sm" value="Edit" icon-size="sm" iconBrand="5.2.0" iconAwesome="fa-pencil"  action="#{offenceDescriptionBean.addOrUpdate(offenceDescrip)}" update="@form"/>
+                            <p:spacer width="5px"/>
+                            <b:commandButton disabled="#{not offenceDescriptionBean.activeUser.userRole.permission.delete}" look="danger" size="sm" value="Del" icon-size="sm" iconBrand="5.2.0" iconAwesome="fa-trash" action="#{offenceDescriptionBean.delete(offenceDescrip)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>
+                </b:panel>
+                <b:panel rendered="#{offenceDescriptionBean.add}" collapsed="false"  collapsible="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{offenceDescriptionBean.panelTitleName}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                        <b:formGroup>
+                            <p:outputLabel value="Section Rule"/>
+                            <p:selectOneMenu value="#{offenceDescriptionBean.entity.sectionRule}" required="true" converter="entityConverter" requiredMessage="Select Offence Classification">
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{offenceDescriptionBean.sectionRules}" var="sectionRule" itemLabel="#{sectionRule.description} " itemValue="#{sectionRule}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Description"/>
+                            <b:inputText field-size="lg" value="#{offenceDescriptionBean.entity.description}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Notes"/>
+                            <b:inputText field-size="lg" value="#{offenceDescriptionBean.entity.notes}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Notes Amount"/>
+                            <b:inputText field-size="lg" value="#{offenceDescriptionBean.entity.notesAmount}"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Deposit"/>
+                            <b:inputText value="#{offenceDescriptionBean.entity.deposit}" fieldSize="lg">
+                                <f:convertNumber pattern="##,##0.00"/>
+                                <f:facet name="prepend">
+                                    <b:label  value="R" />
+                                </f:facet>
+                            </b:inputText>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Section Amount"/>
+                            <b:inputText value="#{offenceDescriptionBean.entity.sectionAmount}" fieldSize="lg">
+                                <f:convertNumber pattern="##,##0.00"/>
+                                <f:facet name="prepend">
+                                    <b:label  value="R" />
+                                </f:facet>
+                            </b:inputText>
+                        </b:formGroup>
+                    </b:panelGrid>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="success" action="#{offenceDescriptionBean.save(offenceDescriptionBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" look="danger" action="#{offenceDescriptionBean.cancel(offenceDescriptionBean.entity)}" immediate="true" update="@form"/>
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

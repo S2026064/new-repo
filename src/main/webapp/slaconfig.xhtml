@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">                
+                <b:panel collapsible="false" look="default" rendered="#{slaConfigBean.add}">
+                    <f:facet name="heading">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:outputLabel value="SLA Configurations" styleClass="panel-title-css"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>
+                    <b:panelGrid col-spans="6,6" size="lg" styleClass="ui-fluid">
+                        <p:fieldset legend="Auto Approve Settings">
+                            <b:panelGrid col-spans="12" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Audit Plan Auto Approve"/>
+                                    <b:inputText value="#{slaConfigBean.entity.auditPlanAutoApprove}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Audit Reporting Auto Approve"/>
+                                    <b:inputText value="#{slaConfigBean.entity.auditReportingAutoApprove}" field-size="lg"/>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Risk Assessment Auto Approve"/>
+                                    <b:inputText value="#{slaConfigBean.entity.riskAssessmentAutoApprove}" field-size="lg"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="Tier Approval Amounts Settings">
+                            <b:panelGrid col-spans="12" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="CI Group Manager Approval Amount"/>
+                                    <b:inputText value="#{slaConfigBean.entity.ciGroupManagerApprovalAmount}" field-size="lg">
+                                        <f:convertNumber pattern="##,##0.00" type="currency"/>
+                                        <f:facet name="prepend">
+                                            <b:label value="R"/>
+                                        </f:facet>
+                                    </b:inputText>
+                                </b:formGroup>
+                            </b:panelGrid>
+                            <b:panelGrid col-spans="12" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="CI Ops Manager Approval Amount"/>
+                                    <b:inputText value="#{slaConfigBean.entity.ciOpsManagerApprovalAmount}" field-size="lg">
+                                        <f:convertNumber pattern="##,##0.00" type="currency"/>
+                                        <f:facet name="prepend">
+                                            <b:label value="R"/>
+                                        </f:facet>
+                                    </b:inputText>
+                                </b:formGroup>
+                            </b:panelGrid>
+                            <b:panelGrid col-spans="12" size="lg" styleClass="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="CI Senior Manager Approval Amount"/>
+                                    <b:inputText value="#{slaConfigBean.entity.ciSeniorManagerApprovalAmount}" field-size="lg">
+                                        <f:convertNumber pattern="##,##0.00" type="currency"/>
+                                        <f:facet name="prepend">
+                                            <b:label value="R"/>
+                                        </f:facet>
+                                    </b:inputText>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </p:fieldset>
+                    </b:panelGrid>
+                    <p:spacer height="5px"/>
+                    <p:fieldset legend="Debt Management Setting">
+                        <b:panelGrid col-spans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Number of Days for LOD"/>
+                                <b:inputText value="#{slaConfigBean.entity.numberOfDaysForLod}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Number of Days for LOI"/>
+                                <b:inputText value="#{slaConfigBean.entity.numberOfDaysForLoi}" field-size="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <p:spacer height="5px"/>
+                    <b:panel collapsible="false" look="default">
+                        <b:panelGrid col-spans="4,4,4" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="South African Repo Rate"/>
+                                <b:inputText value="#{slaConfigBean.entity.southAfricanRepoRate}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="RA Technical Review Minimum"/>
+                                <b:inputText value="#{slaConfigBean.entity.raTechnicalReviewMinimum}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Auto Discard Saved Cases Settings"/>
+                                <b:inputText value="#{slaConfigBean.entity.autoDiscardSavedCasesSettings}" field-size="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </b:panel>
+                    <p:spacer height="5px"/>
+                    <p:fieldset legend="Case Weight Settings">
+                        <b:panelGrid col-spans="12" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Alignment of the Commodity in question to the SARS Compliance Programme and Customs Focus Areas Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.alignmentOfComidity}" field-size="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                        <b:panelGrid col-spans="6,6" size="lg" styleClass="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Customs Value Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.customsValueScoringWeight}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Number of Risk Areas Identified Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.numberOfRiskAreasIdentifiedScoringWeight}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Overall Risk Rating of Risks Identified Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.overalRiskRatingScoringWeight}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Revenue at Risks Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.revenueAtRiskScoringWeight}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Value of Transaction (Number of Lines) Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.valueOfTransactionScoringWeight}" field-size="lg"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="CRCS Prioritisation Scoring Weight"/>
+                                <b:inputText value="#{slaConfigBean.entity.crcsPrioritisationScoringWeight}" field-size="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </p:fieldset>    
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="success" action="#{slaConfigBean.save(slaConfigBean.entity)}" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

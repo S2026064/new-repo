@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="S-ID"/>
+                    <p:inputText value="#{sharedBean.activeUser.user.sid}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="First Name"/>
+                    <p:inputText value="#{sharedBean.activeUser.user.firstName}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="LastName"/>
+                    <p:inputText value="#{sharedBean.activeUser.user.lastName}"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Office"/>
+                    <p:inputText value="#{sharedBean.activeUser.user.locationOffice.area}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Region"/>
+                    <p:inputText value="#{sharedBean.activeUser.user.regionName}" />
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Department Division"/>
+                    <p:inputText value="#{sharedBean.activeUser.user.divisionName}"/>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

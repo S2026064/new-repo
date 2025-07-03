@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="maincontent">
+                <b:panel rendered="#{userBean.list}" look="default"  collapsible="false">
+                    <f:facet name="heading">
+                        <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                            <p:outputLabel value="#{userBean.panelTitleName}" styleClass="panel-title-css"/>
+                            <p:separator/>
+                            <b:formGroup>
+                                <b:inputText value="#{userBean.searchParameter}" placeholder="Search User by SID or First Name or Last Name" fieldSize="lg">
+                                    <f:facet name="prepend">
+                                        <b:commandButton iconSize="lg" iconAwesome="fa-plus" size="lg" look="primary" value="Add" disabled="#{not userBean.activeUser.userRole.permission.add}"  action="#{userBean.addUser()}" update="@form"/>
+                                    </f:facet>
+                                    <f:facet name="prepend">
+                                        <p:outputLabel value="Search"/>
+                                    </f:facet>
+                                    <f:facet name="append">
+                                        <b:commandButton icon-awesome="search" value="Search" size="lg" look="primary" disabled="#{not userBean.activeUser.userRole.permission.read}" action="#{userBean.onSystemUserSearchListener()}" ajax="false" update="@form"/>
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </f:facet>
+                    <p:dataTable rendered="#{not userBean.collections.isEmpty()}" value="#{userBean.users}" var="user" paginator="true" paginatorPosition="top" paginatorAlwaysVisible="false" reflow="true" rows="10" stripedRows="true">
+                        <p:column headerText=" Full Names">
+                            <h:outputFormat value="{0}">
+                                <f:param value="#{user.fullNames}"/>
+                            </h:outputFormat>
+                        </p:column>
+                        <p:column headerText="S-ID">
+                            <h:outputFormat value="{0}">
+                                <f:param value="#{user.sid}" />
+                            </h:outputFormat>
+                        </p:column>
+                        <p:column headerText="Role">
+                            <h:outputText value="#{user.userRole.description}"/>
+                        </p:column>
+                        <p:column headerText="Status">
+                            <h:outputText value="#{user.userStatus.toString()}"/>
+                        </p:column>
+                        <p:column headerText="Action" styleClass="xmedium">
+                            <p:commandButton styleClass="ui-button-primary btn-size-sm" disabled="#{not userBean.activeUser.userRole.permission.update}" value="Edit" action="#{userBean.updateUser(user)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>
+                </b:panel>
+                <b:panel rendered="#{userBean.search}" look="default"  collapsible="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{userBean.panelTitleName}" styleClass="panel-title-css"/>
+                    </f:facet> 
+                    <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                        <p:outputLabel value="#{userBean.panelTitleName}" styleClass="panel-title-css"/>
+                        <p:separator/>
+                        <b:formGroup>
+                            <b:inputText value="#{userBean.sid}" placeholder="Search Employee by S-ID" fieldSize="lg">
+                                <f:facet name="prepend">
+                                    <p:outputLabel value="Search"/>
+                                </f:facet>
+                                <f:facet name="append">
+                                    <b:commandButton icon-awesome="search" size="lg" value="Search" look="primary" action="#{userBean.searchEmployee()}" ajax="false" update="@form"/>
+                                </f:facet>
+                            </b:inputText>
+                        </b:formGroup>
+                    </b:panelGrid>
+                </b:panel>
+                <b:panel rendered="#{userBean.add}" look="default" collapsible="false">
+                    <f:facet name="heading">
+                        <p:outputLabel value="#{userBean.panelTitleName}" styleClass="panel-title-css"/>
+                    </f:facet>
+                    <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">                        
+                        <b:formGroup>
+                            <p:outputLabel value="Full Names"/>
+                            <b:inputText readonly="true" value="#{userBean.entity.fullNames}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="S-ID"/>
+                            <b:inputText readonly="true" value="#{userBean.entity.sid}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Division Code"/>
+                            <b:inputText readonly="true" value="#{userBean.entity.divisionCode}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Email"/>
+                            <b:inputText  value="#{userBean.entity.emailAddress}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Division Description"/>
+                            <b:inputText readonly="true" value="#{userBean.entity.divisionName}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Region"/>
+                            <b:inputText readonly="true" value="#{userBean.entity.regionName}" field-size="lg"/>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Office"/>
+                            <p:selectOneMenu value="#{userBean.entity.locationOffice}" required="true" converter="entityConverter" label="Status" requiredMessage="Please select a status">
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{userBean.locationOffices}" var="locationOfficeOption" itemLabel="#{locationOfficeOption.officeType.toString()} #{locationOfficeOption.area}" itemValue="#{locationOffice}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Roles"/>
+                            <p:selectOneMenu value="#{userBean.entity.userRole}" required="true" converter="entityConverter" label="Role" requiredMessage="Please select a role">
+                                <p:ajax event="change" listener="#{userBean.userRoleListener}" update="@form:managerOption"/>
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{userBean.userRoles}" var="role" itemLabel="#{role.description}" itemValue="#{role}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <b:formGroup>
+                            <p:outputLabel value="Status"/>
+                            <p:selectOneMenu value="#{userBean.entity.userStatus}" required="true" converter="entityConverter" label="Status" requiredMessage="Please select a status">
+                                <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                <f:selectItems value="#{userBean.userStatuses}" var="status" itemLabel="#{status.toString()}" itemValue="#{status}"/>
+                            </p:selectOneMenu>
+                        </b:formGroup>
+                        <p:outputPanel id="managerOption">
+                            <b:formGroup rendered="#{userBean.subordinate}">
+                                <p:outputLabel value="Manager"/>
+                                <p:selectOneMenu value="#{userBean.entity.manager}" required="true" converter="entityConverter" label="Status" requiredMessage="Please select a manager">
+                                    <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{userBean.managers}" var="manager" itemLabel="#{manager.fullNames} (#{manager.sid}) : #{manager.userRole.description}" itemValue="#{manager}"/>
+                                </p:selectOneMenu>
+                            </b:formGroup>
+                        </p:outputPanel>
+                    </b:panelGrid>
+                    <f:facet name="footer">
+                        <b:row>
+                            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                                <b:commandButton large-screen="full-width" size="lg" value="Save" icon="check" look="success" action="#{userBean.save(userBean.entity)}" update="@form" />
+                                <b:commandButton large-screen="full-width" size="lg" value="Cancel" icon="remove" look="danger" action="#{userBean.cancel(userBean.entity)}" immediate="true" update="@form" />
+                            </b:panelGrid>
+                        </b:row>
+                    </f:facet>
+                </b:panel> 
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

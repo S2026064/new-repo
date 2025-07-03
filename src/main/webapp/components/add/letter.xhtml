@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable  value="#{sharedBean.entity.letters}" var="letter" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">
+                <f:facet name="header">                          
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton styleClass="ui-button-primary btn-size-lg" style="width:30rem"  icon="plus" value="New" action="#{sharedBean.addOrUpdateLetter(null)}" process="@this" update="@namingcontainer" >
+                                <p:ajax event="dialogReturn" listener="#{sharedBean.handleAddLetterReturnListener}" update="@namingcontainer" />
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </f:facet>
+                <p:column headerText="Date" styleClass="large">
+                    <h:outputText value="#{letter.createdDate}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Letter Head">
+                    <h:outputText value="#{letter.letterHead.toString()}"/>
+                </p:column>
+                <p:column headerText="Action" styleClass="xxlarge">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  icon="pencil" value="Edit" action="#{sharedBean.addOrUpdateLetter(letter)}" process="@this" update="@namingcontainer">
+                        <p:ajax event="dialogReturn" listener="#{sharedBean.handleUpdateLetterReturnListener}" update="@namingcontainer" />
+                    </p:commandButton>
+                    <p:spacer width="5px"/>
+                    <p:commandButton styleClass="ui-button-danger btn-size-sm" value="Delete" icon="remove" action="#{sharedBean.removeLetter(letter)}" update="@namingcontainer"/>
+                    <p:spacer width="5px"/>
+                    <p:commandButton disabled="#{letter.approve eq 'NO'}" styleClass="ui-button-primary btn-size-sm" icon="fa fa-fw fa-download"  ajax="false" actionListener="#{sharedBean.downloadLetter(letter)}" immediate="true"  update="@namingcontainer">
+                        <p:fileDownload value="#{sharedBean.downloadLetter}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

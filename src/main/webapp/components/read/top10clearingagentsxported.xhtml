@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false" >
+            <p:dataTable value="#{sharedBean.top10clearingagentsxporteds}" var="clearingAgent" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="20">
+                <p:column headerText="Purpose Code">
+                    <h:outputText value="#{clearingAgent.purposeCode}" rendered="#{clearingAgent.customsValueType eq 'CLEARING_AGENT'}"/>
+                </p:column>
+                <p:column headerText="Lines">
+                    <h:outputText value="#{clearingAgent.lines}" rendered="#{clearingAgent.customsValueType eq 'CLEARING_AGENT'}"/>
+                </p:column>
+                <p:column headerText="Customs value">
+                    <h:outputText value="#{clearingAgent.customsValue}" rendered="#{clearingAgent.customsValueType eq 'CLEARING_AGENT'}"/>
+                </p:column>
+                <p:column headerText="Duty">
+                    <h:outputText value="#{clearingAgent.duty}" rendered="#{clearingAgent.customsValueType eq 'CLEARING_AGENT'}"/>
+                </p:column>
+                <p:column headerText="VAT Due">
+                    <h:outputText value="#{clearingAgent.vatDue}" rendered="#{clearingAgent.customsValueType eq 'CLEARING_AGENT'}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:component>
+</html>

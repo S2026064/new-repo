@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <b:panelGrid colSpans="4,8" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Were any additional risks identified and not addressed as part of this case that requires a risk assessment from CRCS?"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRiskIdentified}"/>
+                </b:formGroup>
+            </b:panelGrid>   
+            <b:panelGrid rendered="#{sharedBean.entity.auditPlan.auditReport.additionalRiskIdentified eq 'YES'}" colSpans="12" size="lg" style-class="ui-fluid">
+                <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Risk Area"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Risk Identified?"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Number of risk(s) Identified?"/>
+                    </b:formGroup>
+                </b:panelGrid>
+                <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Contravention History"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.contraventionHistory}"/>
+                    </b:formGroup>
+                    <p:outputPanel>
+                        <b:formGroup>
+                            <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.contraventionHistoryDescription}"/>
+                        </b:formGroup>
+                    </p:outputPanel>
+                    <b:formGroup>
+                        <p:outputLabel value="Country Of Origin"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.originCountry}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.originCountryDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Duty Exemption Regimes"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutyExemption}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutyExemptionDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Duty Suspension"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutySuspension}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.dutySuspensionDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Licensing and Registration"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.licensingAndRegistration}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.licensingAndRegistrationDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Mode of Transport"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.modeOfTransport}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.modeOfTransportDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Other P and R (excluding drugs and precursors)"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.otherPAndR}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.otherPAndRDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Revenue Protection"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.revenueProtection}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.revenueProtectionDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Rules of Origin"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.rulesOfOrigin}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.rulesOfOriginDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Security"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.security}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.securityDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Tariff"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tarrif}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tarrifDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Trade Restrictions"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tradeRestrictions}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea  value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.tradeRestrictionDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Valuation"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.valuation}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <b:inputTextarea value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.valuationDescription}"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Warehousing"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:inputText value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.warehousing}"/>
+                    </b:formGroup>
+                    <b:formGroup id="addtional_risk_wareHousingTab">
+                        <b:inputTextarea value="#{sharedBean.entity.auditPlan.auditReport.additionalRisk.warehousingDescription}"/>
+                    </b:formGroup>
+                </b:panelGrid>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

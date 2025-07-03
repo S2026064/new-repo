@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                <p:fieldset legend="Excise Duties">
+                    <ui:repeat value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.revenueLiabilityDutys}" var="revenueLiabilityDuty" varStatus="exciseVarStatus">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid" rendered="#{revenueLiabilityDuty.duty.dutyType eq 'EXCISE'}">
+                            <b:formGroup>
+                                <p:selectBooleanCheckbox value="#{revenueLiabilityDuty.checkedItem}"  itemLabel="#{revenueLiabilityDuty.duty.description}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <b:inputText rendered="#{revenueLiabilityDuty.checkedItem}" field-size="md" value="#{revenueLiabilityDuty.amount}">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <b:label  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </ui:repeat> 
+                </p:fieldset>
+                <p:fieldset legend="Custom Duties">
+                    <ui:repeat value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.revenueLiabilityDutys}" var="revenueLiabilityDuty" varStatus="customVarStatus">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid" rendered="#{revenueLiabilityDuty.duty.dutyType eq 'CUSTOM'}">
+                            <b:formGroup>
+                                <p:selectBooleanCheckbox value="#{revenueLiabilityDuty.checkedItem}"  itemLabel="#{revenueLiabilityDuty.duty.description}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <b:inputText rendered="#{revenueLiabilityDuty.checkedItem}" field-size="md" value="#{revenueLiabilityDuty.amount}">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <b:label  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </ui:repeat> 
+                </p:fieldset>
+            </b:panelGrid>
+            <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                <p:fieldset legend="Other Duties">
+                    <ui:repeat value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.revenueLiabilityDutys}" var="revenueLiabilityDuty" varStatus="otherVarStatus">
+                        <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid" rendered="#{revenueLiabilityDuty.duty.dutyType eq 'OTHER'}">
+                            <b:formGroup>
+                                <p:selectBooleanCheckbox value="#{revenueLiabilityDuty.checkedItem}"  itemLabel="#{revenueLiabilityDuty.duty.description}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <b:inputText rendered="#{revenueLiabilityDuty.checkedItem}" field-size="md" value="#{revenueLiabilityDuty.amount}">
+                                    <f:convertNumber pattern="##,##0.00"/>
+                                    <f:facet name="prepend">
+                                        <b:label  value="R" />
+                                    </f:facet>
+                                </b:inputText>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </ui:repeat> 
+                </p:fieldset>
+            </b:panelGrid>
+        </p:panel>
+        <p:separator/>
+        <p:panel closable="false" collapsed="false">
+            <b:panelGrid colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Forfieture"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.forfieture}" fieldSize="lg">
+                        <f:convertNumber pattern="#0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Customs Interest"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.customsInterest}" fieldSize="lg">
+                        <f:convertNumber pattern="#0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Value Added Tax"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.vat}" fieldSize="lg">
+                        <f:convertNumber pattern="#0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Value Added Tax Interest"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.vatInterest}" fieldSize="lg">
+                        <f:convertNumber pattern="#0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="VAT Penalty"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.vatPenalty}" fieldSize="lg">
+                        <f:convertNumber pattern="#0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Total Sub Liability"/>
+                    <b:inputText value="#{sharedBean.entity.auditPlan.auditReport.revenueLiability.totalSubLiability}" fieldSize="lg">
+                        <f:convertNumber pattern="##,##0.00"/>
+                        <f:facet name="prepend">
+                            <b:label  value="R" />
+                        </f:facet>
+                    </b:inputText>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>

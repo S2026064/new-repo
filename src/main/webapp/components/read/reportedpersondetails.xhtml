@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component> 
+        <p:panel closable="false" collapsed="false">
+            <p:dataTable value="#{sharedBean.entity.sarCase.reportedPersons}" var="reportedPerson" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">                
+                <p:column  headerText="First Name">
+                    <h:outputText value="#{reportedPerson.firstName}"/>                      
+                </p:column>
+                <p:column  headerText="Last Name">
+                    <h:outputText value="#{reportedPerson.lastName}"/>
+                </p:column>
+                <p:column  headerText="Birth Date">
+                    <h:outputText value="#{reportedPerson.birthDate}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="ID Number">
+                    <h:outputText value="#{reportedPerson.identityNumber}"/>
+                </p:column>
+                <p:column headerText="Action" styleClass="medium">
+                    <p:commandButton styleClass="ui-button-primary btn-size-sm"  value="View" action="#{sharedBean.addOrUpdateReportedPerson(reportedPerson,'reportedpersondetailspopupview')}" process="@this"/>
+                </p:column>
+            </p:dataTable>  
+        </p:panel> 
+    </ui:component>
+</html>

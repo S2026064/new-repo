@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <f:facet name="header">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:outputLabel value=""/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </f:facet>  
+            <p:dataTable value="#{sharedBean.entity.auditPlan.auditReport.auditReportOffencePenalties}" var="auditReportOffencePenalty" paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10">                
+                <p:column  headerText="Offence Classification">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.offenceClassification.description}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column  headerText="Section Rule" styleClass="xxxlarge">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.sectionRule.description}">
+                        <f:convertDateTime pattern="dd MMM yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Offence Description">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.offenceDescription.description}"/>
+                </p:column>
+                <p:column headerText="Deposit" styleClass="large">
+                    <h:outputText value="#{auditReportOffencePenalty.offencePenalty.offenceDescription.deposit}">
+                        <f:convertNumber currencyCode="ZAR" currencySymbol="R"   pattern="##,##0.00"/> 
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Action" styleClass="large">
+                    <b:commandButton value="Edit" icon="pencil" size="xs"   look="primary" action="#{sharedBean.updateOffenceAndPenalty(auditReportOffencePenalty)}" update="@(.ui-panel)"/>
+                    <p:spacer width="5px"/>
+                    <b:commandButton value="Delete" icon="remove" size="xs"   look="danger" action="#{sharedBean.removeOffenceAndPenalty(auditReportOffencePenalty)}" update="@form"/>
+                </p:column>
+            </p:dataTable>
+            <f:facet name="footer">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:outputLabel value="Sub Offence or Penalty Total"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:outputLabel value="#{sharedBean.entity.auditPlan.auditReport.subPenaltyTotal}">
+                            <f:convertNumber currencySymbol="R" type="currency" pattern="##,##0.00" locale="en-ZA"/> 
+                        </p:outputLabel>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </f:facet> 
+        </p:panel>
+        <p:spacer height="5px"/>
+        <p:panel closable="false" collapsed="false">
+            <f:facet name="header">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:outputLabel value="Add/Update Offence and Penalty"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </f:facet>  
+            <b:panelGrid  colSpans="4,4,4" size="lg" styleClass="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Offence Classification"/>
+                    <p:selectOneMenu styleClass="noupdate" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.offenceClassification}"  converter="entityConverter">
+                        <p:ajax event="itemSelect" listener="#{sharedBean.onOffenceClassificationChange}" update="sectionRule_select_id_2024"/>
+                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                        <f:selectItems value="#{sharedBean.offenceClassifications}" var="classif" itemLabel="#{classif.description}" itemValue="#{classif}"/>
+                    </p:selectOneMenu> 
+                </b:formGroup> 
+                <p:outputPanel id="sectionRule_select_id_2024">
+                    <b:formGroup>
+                        <p:outputLabel value="Section Rule"/>
+                        <p:selectOneMenu  styleClass="noupdate" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.sectionRule}" converter="entityConverter">
+                            <p:ajax event="itemSelect" listener="#{sharedBean.onSectionRuleChange}" update="offenceDescription_select_id_2024"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true" />
+                            <f:selectItems  value="#{sharedBean.sectionRules}" var="sect" itemLabel="#{sect.description}" itemValue="#{sect}"/>
+                        </p:selectOneMenu> 
+                    </b:formGroup>
+                </p:outputPanel>
+                <p:outputPanel id="offenceDescription_select_id_2024">
+                    <b:formGroup>
+                        <p:outputLabel value="Offence Description"/>
+                        <p:selectOneMenu  styleClass="noupdate"  value="#{sharedBean.auditReportOffencePenalty.offencePenalty.offenceDescription}" converter="entityConverter">
+                            <p:ajax event="itemSelect" update="offenceDescription_outputpanel_id_2024"/>
+                            <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                            <f:selectItems value="#{sharedBean.offenceDescriptions}" var="offenceDescrip" itemLabel="#{offenceDescrip.description}" itemValue="#{offenceDescrip}"/>
+                        </p:selectOneMenu> 
+                    </b:formGroup> 
+                </p:outputPanel>
+            </b:panelGrid>
+            <p:outputPanel id="offenceDescription_outputpanel_id_2024">
+                <b:panelGrid colSpans="6,6" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Deposit"/>
+                        <b:inputText readonly="true" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.offenceDescription.deposit}" fieldSize="lg">
+                            <f:convertNumber pattern="##,##0.00"/>
+                            <f:facet name="prepend">
+                                <b:label  value="R" />
+                            </f:facet>
+                        </b:inputText>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Notes"/>
+                        <b:inputText readonly="true" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.offenceDescription.notes}" fieldSize="lg"/>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Section Amount"/>
+                        <b:inputText readonly="true" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.offenceDescription.sectionAmount}" fieldSize="lg">
+                            <f:convertNumber pattern="##,##0.00"/>
+                            <f:facet name="prepend">
+                                <b:label  value="R" />
+                            </f:facet>
+                        </b:inputText>
+                    </b:formGroup>
+                    <b:formGroup>
+                        <p:outputLabel value="Notes Amount"/>
+                        <b:inputText readonly="true" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.offenceDescription.notesAmount}" fieldSize="lg"/>
+                    </b:formGroup>
+                </b:panelGrid>
+                <b:panelGrid colSpans="12" size="lg" styleClass="ui-fluid">
+                    <b:formGroup>
+                        <p:outputLabel value="Penalty Amount"/>
+                        <b:inputText readonly="true" value="#{sharedBean.auditReportOffencePenalty.offencePenalty.subOffenceOrPenaltyAmount}" fieldSize="lg">
+                            <f:convertNumber pattern="#0.00"/>
+                            <f:facet name="prepend">
+                                <b:label  value="R" />
+                            </f:facet>
+                        </b:inputText>
+                    </b:formGroup>
+                </b:panelGrid>
+            </p:outputPanel>
+            <f:facet name="footer">
+                <b:row styleClass="ui-fluid">
+                    <b:commandButton look="primary"  size="lg" large-screen="full-width" icon="plus" immediate="true"  update="@form" action="#{sharedBean.addOffenceAndPenalty(sharedBean.auditReportOffencePenalty)}" value="Add Penalty"/>
+                </b:row>
+            </f:facet>   
+        </p:panel>
+    </ui:component>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <ui:repeat value="#{sharedEntity.sarCase.nonComplianceDetails}" var="noncomp">
+                <p:panel closable="false" collapsed="false">
+                    <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                        <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Time Frame"/>
+                                <p:inputText placeholder="Time Frame" value="#{noncomp.timeFrame.toString()}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Yearly Loss"/>
+                                <p:inputText placeholder="Yearly Loss" value="#{noncomp.yearlyLoss.toString()}"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                        <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Describe the incident i.e What is occurring"/>
+                                <b:inputTextarea value="#{noncomp.description}" maxlength="4000" field-size="lg" required="true" tooltip="Please describe the modus operandi (method of operation) employed to commit the non-compliance in detail i.e. what is the non-compliance that is occurring and how is the non-compliance being committed”" requiredMessage="Please describe the modus operandi (method of operation) employed to commit the non-compliance in detail i.e. what is the non-compliance that is occurring and how is the non-compliance being committed"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Describe where the incident is occurring "/>
+                                <b:inputTextarea value="#{noncomp.location}" maxlength="4000"  tooltip="Please provide all addresses or locations where the non-compliant is taking place" placeholder="Describe where the incident is occurring i.e. all the locations where the noncompliance is occurring (can be more than 1 address where the non-compliant is taking place)" field-size="lg" required="true" requiredMessage="Please provide all addresses or locations where the non-compliant is taking place"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Describe when the non-compliance occurs/is said to occur"/>
+                                <b:inputTextarea value="#{noncomp.dayTime}" maxlength="4000" tooltip="Please indicate if the non-compliance occurs only during specific times or on specific days or if the non-compliance happens independent of any specific time or day" field-size="lg" required="true" requiredMessage="Please indicate if the non-compliance occurs only during specific times or on specific days or if the non-compliance happens independent of any specific time or day"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Please provide any additional information of relevance"/>
+                                <b:inputTextarea value="#{noncomp.additionalInformation}" tooltip="Please provide any other relevant information that has not been provided in any of the other sections of this report”" maxlength="4000" field-size="lg"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                        <b:formGroup>
+                            <p:outputLabel value=" incident Date"/>
+                            <p:calendar  value="#{noncomp.incidentDate}" pattern="dd MMM yyyy"/>
+                        </b:formGroup>
+                        <p:separator/>
+                        <b:formGroup>
+                            <p:outputLabel value="Select where in the Customs value chain the non-compliance occurs/is said to occur"/>
+                        </b:formGroup>
+                        <p:separator/>
+                        <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                            <b:formGroup>
+                                <p:outputLabel value="Licensing and Registration"/>
+                                <p:inputText  value="#{noncomp.licensingRegistration.toString()}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Submission"/>
+                                <p:inputText  value="#{noncomp.submission.toString()}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Declaration"/>
+                                <p:inputText  value="#{noncomp.declaration.toString()}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Payment"/>
+                                <p:inputText  value="#{noncomp.payment.toString()}"/>                                
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Illegal Activities"/>
+                                <p:inputText  value="#{noncomp.illegalActivities.toString()}"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Other"/>
+                                <p:inputText  value="#{noncomp.other.toString()}"/>
+                            </b:formGroup>
+                        </b:panelGrid>
+                    </b:panelGrid>
+                </p:panel>
+                <p:spacer height="5px"/>
+            </ui:repeat>
+        </p:panel>
+    </ui:component>
+</html>

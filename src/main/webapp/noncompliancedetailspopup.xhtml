@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/template/popuptemplate.xhtml">
+            <ui:define name="maincontent">
+                <b:panel collapsible="false" collapsed="false">
+                    <p:fieldset  legend="Non Compliance Details">
+                        <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                            <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Time Frame"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.timeFrame}" required="true" converter="entityConverter" requiredMessage="Select a time frame">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.timeFrames}" var="timeframe" itemLabel="#{timeframe.toString()}" itemValue="#{timeframe}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Yearly Loss"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.yearlyLoss}" converter="entityConverter">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yearlyLosses}" var="yearlyLoss" itemLabel="#{yearlyLoss.toString()}" itemValue="#{yearlyLoss}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                            </b:panelGrid>
+                            <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Describe the incident i.e What is occurring"/>
+                                    <b:inputTextarea rows="2" value="#{nonComplianceDetailsBean.entity.description}" maxlength="4000" field-size="lg" required="true" tooltip="Describe the modus operandi (method of operation) employed to commit the non-compliance in detail i.e. what is the non-compliance that is occurring and how is the non-compliance being committed”" requiredMessage="Describe the modus operandi (method of operation) employed to commit the non-compliance in detail i.e. what is the non-compliance that is occurring and how is the non-compliance being committed"/>
+                                </b:formGroup>
+
+                                <b:formGroup>
+                                    <p:outputLabel value="Describe where the incident is occurring "/>
+                                    <b:inputTextarea rows="2" value="#{nonComplianceDetailsBean.entity.location}" maxlength="4000"  tooltip="Please provide all addresses or locations where the non-compliant is taking place" placeholder="Describe where the incident is occurring i.e. all the locations where the noncompliance is occurring (can be more than 1 address where the non-compliant is taking place)" field-size="lg" required="true" requiredMessage="Provide all addresses or locations where the non-compliant is taking place"/>
+                                </b:formGroup>
+
+                                <b:formGroup>
+                                    <p:outputLabel value="Describe when the non-compliance occurs/is said to occur"/>
+                                    <b:inputTextarea rows="2" value="#{nonComplianceDetailsBean.entity.dayTime}" maxlength="4000" tooltip="Please indicate if the non-compliance occurs only during specific times or on specific days or if the non-compliance happens independent of any specific time or day" field-size="lg" required="true" requiredMessage="Indicate if the non-compliance occurs only during specific times or on specific days or if the non-compliance happens independent of any specific time or day"/>
+                                </b:formGroup>
+
+                                <b:formGroup>
+                                    <p:outputLabel value="Please provide any additional information of relevance"/>
+                                    <b:inputTextarea rows="2" value="#{nonComplianceDetailsBean.entity.additionalInformation}" tooltip="Provide any other relevant information that has not been provided in any of the other sections of this report”" maxlength="4000" field-size="lg"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                            <b:formGroup>
+                                <p:outputLabel value=" incident Date"/>
+                                <p:datePicker pattern="dd MMM yyyy" value="#{nonComplianceDetailsBean.entity.incidentDate}" required="true" requiredMessage="Choose incident date" rendered="true"/>
+                            </b:formGroup>
+                            <b:formGroup>
+                                <p:outputLabel value="Select where in the Customs value chain the non-compliance occurs/is said to occur"/>
+                            </b:formGroup>
+                            <b:panelGrid colSpans="4,4,4" size="lg" style-class="ui-fluid">
+                                <b:formGroup>
+                                    <p:outputLabel value="Licensing and Registration"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.licensingRegistration}" title="Identify theft, abuse of general customs code, non-registration etc" required="true" converter="entityConverter" requiredMessage="Select Licensing and Registration">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yesNoOptions}" var="licensingAndRegistration" itemLabel="#{licensingAndRegistration.toString()}" itemValue="#{licensingAndRegistration}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Submission"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.submission}" title="non-declaration (smuggling), incorrect declaration (tariff misdeclaration, value/quantity misdeclaration) etc" required="true" converter="entityConverter" requiredMessage="Select submission ">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yesNoOptions}" var="submission" itemLabel="#{submission.toString()}" itemValue="#{submission}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Declaration"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.declaration}" title="non-declaration (smuggling), incorrect declaration (tariff misdeclaration, value/quantity misdeclaration) etc" required="true" converter="entityConverter" requiredMessage="Select Declaration">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yesNoOptions}" var="declaration" itemLabel="#{declaration.toString()}" itemValue="#{declaration}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Payment"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.payment}" title="Failure to pay duties and VAT due, late payment of duties and VAT due" required="true" converter="entityConverter" requiredMessage="Select Payment">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yesNoOptions}" var="payment" itemLabel="#{payment.toString()}" itemValue="#{payment}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Illegal Activities"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.illegalActivities}" title="Activities involving corruption, activities involving the illegal facilitation of imported and exported goods etc." required="true" converter="entityConverter" requiredMessage="Select Illegal Activities">
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yesNoOptions}" var="illegalActivities" itemLabel="#{illegalActivities.toString()}" itemValue="#{illegalActivities}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                                <b:formGroup>
+                                    <p:outputLabel value="Other"/>
+                                    <p:selectOneMenu value="#{nonComplianceDetailsBean.entity.other}" title="Any other activities not classified as above" required="true" converter="entityConverter" requiredMessage="Select Other">
+                                        <p:ajax event="change" update="otherdiscribt"/>
+                                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                                        <f:selectItems value="#{nonComplianceDetailsBean.yesNoOptions}" var="other" itemLabel="#{other.toString()}" itemValue="#{other}"/>
+                                    </p:selectOneMenu>
+                                </b:formGroup>
+                            </b:panelGrid>
+                            <b:panelGrid id="otherdiscribt" colSpans="12" size="lg" style-class="ui-fluid">
+                                <b:formGroup rendered="#{nonComplianceDetailsBean.entity.other eq 'YES'}" >
+                                    <p:outputLabel value="Other"/>
+                                    <p:inputText value="#{nonComplianceDetailsBean.entity.otherDescription}"/>
+                                </b:formGroup>
+                            </b:panelGrid>
+                        </b:panelGrid>
+                    </p:fieldset>
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <b:commandButton look="success" value="Add"  size="md" large-screen="full-width" icon="check" update="@form" action="#{nonComplianceDetailsBean.selectNonComplianceDetailFromDialog(nonComplianceDetailsBean.entity)}"/>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <b:commandButton look="danger" value="Cancel"  size="md" large-screen="full-width" icon="remove" immediate="true"  update="@form" action="#{nonComplianceDetailsBean.cancelNonComplianceDetailFromDialog()}"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </f:facet>  
+                </b:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panel closable="false" collapsed="false">
+            <b:panelGrid colSpans="6,6" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Audit Type"/>
+                    <p:selectOneMenu value="#{sharedBean.entity.auditPlan.auditType}" converter="entityConverter" required="true" requiredMessage="Select audit type">
+                        <f:selectItem itemLabel="Select One"  noSelectionOption="true"/>
+                        <f:selectItems value="#{sharedBean.auditTypes}" var="auditType" itemLabel="#{auditType.toString()}" itemValue="#{auditType}"/>
+                    </p:selectOneMenu>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Start Date"/>
+                    <p:datePicker  pattern="dd MMM yyyy" value="#{sharedBean.entity.auditPlan.startDate}" required="true" requiredMessage="Select the audit start date"/>
+                </b:formGroup>
+            </b:panelGrid>
+            <b:panelGrid colSpans="12" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Period to be Audited"/>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:datePicker pattern="dd MMM yyyy"  selectionMode="range" value="#{sharedBean.entity.auditPlan.auditPeriod}"  required="true" requiredMessage="Select the period to be audited"/>
+                </b:formGroup>
+            </b:panelGrid>
+            <b:panelGrid rendered="#{sharedBean.entity.caseType eq 'VDDL'}" colSpans="6,6" size="lg" style-class="ui-fluid">
+                <b:formGroup>
+                    <p:outputLabel value="Scope"/>
+                    <b:inputTextarea value="#{sharedBean.entity.auditPlan.vddlAuditScope}" required="true" requiredMessage="Enter Audit Scope" rows="8" style="font-size: 18px;"  placeholder="Please enter Audit Scope" >
+                        <f:validateLength  maximum="400"/>
+                    </b:inputTextarea>
+                </b:formGroup>
+                <b:formGroup>
+                    <p:outputLabel value="Objective"/>
+                    <b:inputTextarea value="#{sharedBean.entity.auditPlan.vddlAuditObjective}" required="true" requiredMessage="Enter Audit Objective" rows="8" style="font-size: 18px;"  placeholder="Please enter Audit Objective" >
+                        <f:validateLength  maximum="400"/>
+                    </b:inputTextarea>
+                </b:formGroup>
+            </b:panelGrid>
+        </p:panel>
+    </ui:component>
+</html>
